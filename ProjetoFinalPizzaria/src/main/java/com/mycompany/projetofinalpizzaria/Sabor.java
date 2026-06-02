@@ -10,12 +10,32 @@ package com.mycompany.projetofinalpizzaria;
  */
 public class Sabor {
     private String sabor;
+    private TipoPizza tipo;
+
+    public Sabor(String sabor, TipoPizza tipo) throws Exception{
+        if(!sabor.matches("[a-zA-Z]+")){
+            throw new Exception("Sabor so permite letras");
+        }
+        this.sabor = sabor;
+        this.tipo = tipo;
+    }
+
+    public TipoPizza getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoPizza tipo) {
+        this.tipo = tipo;
+    }
 
     public String getSabor() {
         return sabor;
     }
 
-    public void setSabor(String sabor) {
+    public void setSabor(String sabor)throws Exception {
+        if(!sabor.matches("[a-zA-Z]+")){
+            throw new Exception("Sabor so permite letras");
+        }
         this.sabor = sabor;
     }
 

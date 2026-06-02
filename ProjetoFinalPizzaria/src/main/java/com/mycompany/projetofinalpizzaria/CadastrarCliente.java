@@ -57,9 +57,10 @@ public class CadastrarCliente extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         MenuClientes = new javax.swing.JMenu();
         MenuClientesCadastrados = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        menuCadastrarSabor = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Dashboard");
         setMinimumSize(new java.awt.Dimension(871, 540));
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -282,8 +283,13 @@ public class CadastrarCliente extends javax.swing.JFrame {
 
         jMenuBar1.add(MenuClientes);
 
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
+        menuCadastrarSabor.setText("Sabor");
+
+        jMenuItem1.setText("Cadastrar Sabor");
+        jMenuItem1.addActionListener(this::jMenuItem1ActionPerformed);
+        menuCadastrarSabor.add(jMenuItem1);
+
+        jMenuBar1.add(menuCadastrarSabor);
 
         setJMenuBar(jMenuBar1);
 
@@ -370,10 +376,6 @@ public class CadastrarCliente extends javax.swing.JFrame {
         atualizarTabela();
     }//GEN-LAST:event_formWindowActivated
 
-    private void MenuClientesCadastradosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuClientesCadastradosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_MenuClientesCadastradosActionPerformed
-
     private void botaoDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDeleteActionPerformed
         int linhaSelecionada = tabelaClientes.getSelectedRow();
         //caso nenhuma linha selecionada
@@ -437,6 +439,15 @@ public class CadastrarCliente extends javax.swing.JFrame {
         
     }//GEN-LAST:event_botaoPesquisarActionPerformed
 
+    private void MenuClientesCadastradosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuClientesCadastradosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MenuClientesCadastradosActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        CadastrarSabor cs = new CadastrarSabor();
+        cs.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -478,13 +489,14 @@ public class CadastrarCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JMenu menuCadastrarSabor;
     private javax.swing.JTable tabelaClientes;
     // End of variables declaration//GEN-END:variables
 }

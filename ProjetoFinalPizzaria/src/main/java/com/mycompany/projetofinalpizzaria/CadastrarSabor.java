@@ -10,29 +10,25 @@ import javax.swing.JOptionPane;
  *
  * @author Kauan
  */
-public class EditarCliente extends javax.swing.JFrame {
+public class CadastrarSabor extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EditarCliente.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CadastrarSabor.class.getName());
     private Cliente clienteEmEdicao;
     /**
      * Creates new form EditarCliente
      */
-    public EditarCliente() {
+    public CadastrarSabor() {
         initComponents();
-        MenuClientesCadastrados.setEnabled(false);
-        MenuClientesCadastrados.setEnabled(false);
+        MenuCadastrarSabor.setEnabled(false);
+        preencherComboTipo();
     }
-    //construtor criado para ja receber ter o cliente q sera alterado
-    public EditarCliente(Cliente cliente) {
-        initComponents(); 
-        MenuClientesCadastrados.setEnabled(false);
-        MenuClientesCadastrados.setEnabled(false);
-        this.clienteEmEdicao = cliente;
-        caixaTextoNome.setText(cliente.getNome());
-        caixaTextoSobrenome.setText(cliente.getSobrenome());
-        caixaTextoTelefone.setText(cliente.getTelefone());
+    public void preencherComboTipo(){
+        BancoDados bd = BancoDados.getInstance();
+        for(int i = 0; i < bd.getListaTipo().size();i++){
+            comboTipoPizza.addItem(bd.getListaTipo().get(i).getCategoria());
+        }
     }
-
+        
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -44,19 +40,17 @@ public class EditarCliente extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         caixaTextoNome = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        caixaTextoSobrenome = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        caixaTextoTelefone = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         botaoLimpar = new javax.swing.JButton();
         botaoAdicionar = new javax.swing.JButton();
+        comboTipoPizza = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         MenuClientes = new javax.swing.JMenu();
         MenuClientesCadastrados = new javax.swing.JMenuItem();
-        menuCadastrarSabor = new javax.swing.JMenu();
+        MenuCadastrarSabor = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -67,8 +61,8 @@ public class EditarCliente extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe Print", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/pencil.png"))); // NOI18N
-        jLabel1.setText("Editar Cliente");
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/pizza.png"))); // NOI18N
+        jLabel1.setText("Cadastrar Sabor");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -77,7 +71,7 @@ public class EditarCliente extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         jPanel1.add(jLabel1, gridBagConstraints);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Editar Cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe Print", 1, 14), new java.awt.Color(0, 0, 0))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Novo Sabor", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe Print", 1, 14), new java.awt.Color(0, 0, 0))); // NOI18N
         jPanel2.setOpaque(false);
 
         jLabel2.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
@@ -88,17 +82,7 @@ public class EditarCliente extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel3.setText("Sobrenome");
-
-        caixaTextoSobrenome.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
-        caixaTextoSobrenome.addActionListener(this::caixaTextoSobrenomeActionPerformed);
-
-        jLabel4.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel4.setText("Telefone (Com DDD)");
-
-        caixaTextoTelefone.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
-        caixaTextoTelefone.addActionListener(this::caixaTextoTelefoneActionPerformed);
+        jLabel3.setText("Tipo Pizza");
 
         jPanel3.setOpaque(false);
 
@@ -108,8 +92,8 @@ public class EditarCliente extends javax.swing.JFrame {
         botaoLimpar.addActionListener(this::botaoLimparActionPerformed);
 
         botaoAdicionar.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
-        botaoAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/diskette.png"))); // NOI18N
-        botaoAdicionar.setText("Salvar");
+        botaoAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/add.png"))); // NOI18N
+        botaoAdicionar.setText("Criar");
         botaoAdicionar.addActionListener(this::botaoAdicionarActionPerformed);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -119,7 +103,7 @@ public class EditarCliente extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(botaoAdicionar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addComponent(botaoLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -136,24 +120,27 @@ public class EditarCliente extends javax.swing.JFrame {
                 .addContainerGap(35, Short.MAX_VALUE))
         );
 
+        comboTipoPizza.addActionListener(this::comboTipoPizzaActionPerformed);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(30, 30, 30))
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(caixaTextoNome)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(caixaTextoSobrenome)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(caixaTextoTelefone))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(30, 30, 30))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(comboTipoPizza, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,15 +151,11 @@ public class EditarCliente extends javax.swing.JFrame {
                 .addComponent(caixaTextoNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(caixaTextoSobrenome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(caixaTextoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(101, 101, 101)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(comboTipoPizza, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(170, 170, 170)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -232,13 +215,12 @@ public class EditarCliente extends javax.swing.JFrame {
 
         jMenuBar1.add(MenuClientes);
 
-        menuCadastrarSabor.setText("Sabor");
+        MenuCadastrarSabor.setText("Sabor");
 
         jMenuItem1.setText("Cadastrar Sabor");
-        jMenuItem1.addActionListener(this::jMenuItem1ActionPerformed);
-        menuCadastrarSabor.add(jMenuItem1);
+        MenuCadastrarSabor.add(jMenuItem1);
 
-        jMenuBar1.add(menuCadastrarSabor);
+        jMenuBar1.add(MenuCadastrarSabor);
 
         setJMenuBar(jMenuBar1);
 
@@ -256,51 +238,45 @@ public class EditarCliente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void caixaTextoSobrenomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caixaTextoSobrenomeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_caixaTextoSobrenomeActionPerformed
-
-    private void caixaTextoTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caixaTextoTelefoneActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_caixaTextoTelefoneActionPerformed
+    private void MenuClientesCadastradosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuClientesCadastradosActionPerformed
+       CadastrarCliente cc = new CadastrarCliente();
+       cc.setVisible(true);
+    }//GEN-LAST:event_MenuClientesCadastradosActionPerformed
 
     private void botaoLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLimparActionPerformed
         caixaTextoNome.setText("");
-        caixaTextoSobrenome.setText("");
-        caixaTextoTelefone.setText("");
+
     }//GEN-LAST:event_botaoLimparActionPerformed
 
     private void botaoAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarActionPerformed
-        String nome = caixaTextoNome.getText();
-        String sobrenome = caixaTextoSobrenome.getText();
-        String telefone = caixaTextoTelefone.getText();
-        if(nome.isEmpty()|| sobrenome.isEmpty()|| telefone.isEmpty()){
+        String nomeSabor = caixaTextoNome.getText();
+        String tipo = (String) comboTipoPizza.getSelectedItem();
+        BancoDados bd = BancoDados.getInstance();
+        if(nomeSabor.isEmpty()|| tipo.isEmpty()){
             JOptionPane.showMessageDialog(this,"Existem campos em branco por favor preencha todos os campos","",JOptionPane.ERROR_MESSAGE);
             return;
         }
         try{
-            clienteEmEdicao.setNome(nome);
-            clienteEmEdicao.setSobrenome(sobrenome);
-            clienteEmEdicao.setTelefone(telefone);
-            JOptionPane.showMessageDialog(this,"Edição feita com sucesso!");
-            
-        }
-        catch(IllegalArgumentException e){
-            JOptionPane.showMessageDialog(this,"Telefone invalido","",JOptionPane.ERROR_MESSAGE);
+            for(int i = 0; i < bd.getListaTipo().size();i++){
+                TipoPizza tipop = bd.getListaTipo().get(i);
+                if(tipop.getCategoria().equals(tipo)){
+                    Sabor sabor = new Sabor(nomeSabor,tipop);
+                    bd.getListaSabor().add(sabor);
+                    JOptionPane.showMessageDialog(this,"Sabor Adicionado");
+                    return;
+                }
+            }
         }
         catch(Exception e){
-            JOptionPane.showMessageDialog(this,"Campo nome e sobrenome so permite letras","",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,"Somentes letras podem ser utilizadas para nome do sabor","",JOptionPane.ERROR_MESSAGE);
+            return;
         }
+        JOptionPane.showMessageDialog(this,"Erro ao encontrar o tipo","",JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_botaoAdicionarActionPerformed
 
-    private void MenuClientesCadastradosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuClientesCadastradosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_MenuClientesCadastradosActionPerformed
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        CadastrarSabor cs = new CadastrarSabor();
-        cs.setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    private void comboTipoPizzaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTipoPizzaActionPerformed
+        
+    }//GEN-LAST:event_comboTipoPizzaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -324,21 +300,20 @@ public class EditarCliente extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new EditarCliente().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new CadastrarSabor().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu MenuCadastrarSabor;
     private javax.swing.JMenu MenuClientes;
     private javax.swing.JMenuItem MenuClientesCadastrados;
     private javax.swing.JButton botaoAdicionar;
     private javax.swing.JButton botaoLimpar;
     private javax.swing.JTextField caixaTextoNome;
-    private javax.swing.JTextField caixaTextoSobrenome;
-    private javax.swing.JTextField caixaTextoTelefone;
+    private javax.swing.JComboBox<String> comboTipoPizza;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
@@ -347,6 +322,5 @@ public class EditarCliente extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JMenu menuCadastrarSabor;
     // End of variables declaration//GEN-END:variables
 }
