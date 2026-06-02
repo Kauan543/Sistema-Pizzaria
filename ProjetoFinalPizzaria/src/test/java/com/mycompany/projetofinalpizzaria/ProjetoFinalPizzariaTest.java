@@ -1,5 +1,4 @@
 package com.mycompany.projetofinalpizzaria;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -60,6 +59,154 @@ public class ProjetoFinalPizzariaTest {
         double area2 = c2.calculaArea();
         assertEquals(area, 113.1);
         assertEquals(area2, 78.54);
+        
+    }
+    @Test
+    public void testCliente1() {
+        //testar se consigo instaciar normalmente um cliente
+        String teste;
+        try{
+            Cliente cliente = new Cliente("Kauan", "Calegari", "41999421702");
+            teste = "Passou";
+        }
+        catch(IllegalArgumentException e){
+            teste = "Falhou 1";
+        }
+        catch(Exception e){
+            teste = "Falhou 2";
+        }
+        assertEquals("Passou", teste);
+        
+    }
+    @Test
+    public void testCliente2() {
+        //testar se lança exceção com telefone invalido 
+        String teste;
+        try{
+            Cliente cliente = new Cliente("Kauan", "Calegari", "celular");
+            teste = "Passou";
+        }
+        catch(IllegalArgumentException e){
+            teste = "Falhou 1";
+        }
+        catch(Exception e){
+            teste = "Falhou 2";
+        }
+        assertEquals("Falhou 1", teste);
+        
+    }
+    @Test
+    public void testCliente3() {
+        //testar se lança exceção com sobrenome invalido
+        String teste;
+        try{
+            Cliente cliente = new Cliente("Kauan", "Calegari1", "41999421702");
+            teste = "Passou";
+        }
+        catch(IllegalArgumentException e){
+            teste = "Falhou 1";
+        }
+        catch(Exception e){
+            teste = "Falhou 2";
+        }
+        assertEquals("Falhou 2", teste);
+        
+    }
+    @Test
+    public void testCliente4() {
+        //testar se lança exceção com nome invalido
+        String teste;
+        try{
+            Cliente cliente = new Cliente("Kaua1n", "Calegari", "41999421702");
+            teste = "Passou";
+        }
+        catch(IllegalArgumentException e){
+            teste = "Falhou 1";
+        }
+        catch(Exception e){
+            teste = "Falhou 2";
+        }
+        assertEquals("Falhou 2", teste);
+        
+    }
+    @Test
+    public void testCliente5() {
+        //testar se consigo instaciar normalmente um cliente utilizando os Setters
+        String teste;
+        try{
+            Cliente cliente = new Cliente("Kauan", "Calegari", "41999421702");
+            cliente.setNome("Joao");
+            cliente.setSobrenome("Paulo");
+            cliente.setTelefone("51999421702");
+            teste = "Passou";
+        }
+        catch(IllegalArgumentException e){
+            teste = "Falhou 1";
+        }
+        catch(Exception e){
+            teste = "Falhou 2";
+        }
+        assertEquals("Passou", teste);
+        
+    }
+    @Test
+    public void testCliente6() {
+        //testar se lança exceção com telefone invalido utilizando os Setters
+        String teste;
+        try{
+            Cliente cliente = new Cliente("Kauan", "Calegari", "41999421702");
+            cliente.setNome("Joao");
+            cliente.setSobrenome("Paulo");
+            cliente.setTelefone("5199942170248399842");
+            teste = "Passou";
+        }
+        catch(IllegalArgumentException e){
+            teste = "Falhou 1";
+        }
+        catch(Exception e){
+            teste = "Falhou 2";
+        }
+        assertEquals("Falhou 1", teste);
+        
+    }
+    @Test
+    public void testCliente7() {
+        //testar se lança exceção com sobrenome invalido utilizando os Setters
+        String teste;
+        try{
+            Cliente cliente = new Cliente("Kauan", "Calegari", "41999421702");
+            cliente.setNome("Joao");
+            cliente.setSobrenome("Paulo%");
+            cliente.setTelefone("51999421702");
+            teste = "Passou";
+        }
+        catch(IllegalArgumentException e){
+            teste = "Falhou 1";
+        }
+        catch(Exception e){
+            teste = "Falhou 2";
+        }
+        assertEquals("Falhou 2", teste);
+        
+    }
+     @Test
+    public void testCliente8() {
+        //testar se lança exceção com nome invalido utilizando os Setters
+        String teste;
+        try{
+            Cliente cliente = new Cliente("Kauan", "Calegari", "41999421702");
+            cliente.setNome("Joao%");
+            cliente.setSobrenome("Paulo");
+            cliente.setTelefone("51999421702");
+            teste = "Passou";
+        }
+        catch(IllegalArgumentException e){
+            teste = "Falhou 1";
+        }
+        catch(Exception e){
+            teste = "Falhou 2";
+        }
+        assertEquals("Falhou 2", teste);
         
     }
     

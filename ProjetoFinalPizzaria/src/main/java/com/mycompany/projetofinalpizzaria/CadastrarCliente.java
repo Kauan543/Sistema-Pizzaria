@@ -74,7 +74,7 @@ public class CadastrarCliente extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/group.png"))); // NOI18N
-        jLabel1.setText("Lista de Clientes");
+        jLabel1.setText("Lista de Cliente");
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Novo Cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe Print", 1, 14), new java.awt.Color(0, 0, 0))); // NOI18N
         jPanel2.setOpaque(false);
@@ -94,7 +94,7 @@ public class CadastrarCliente extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel4.setText("Telefone");
+        jLabel4.setText("Telefone (Com DDD)");
 
         caixaTextoTelefone.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
         caixaTextoTelefone.addActionListener(this::caixaTextoTelefoneActionPerformed);
@@ -196,7 +196,15 @@ public class CadastrarCliente extends javax.swing.JFrame {
             new String [] {
                 "Nome", "Sobrenome", "Telefone"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(tabelaClientes);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -213,7 +221,7 @@ public class CadastrarCliente extends javax.swing.JFrame {
                         .addComponent(botaoDelete)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(botaoEditar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
                         .addComponent(caixaTextoPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(botaoPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -312,7 +320,7 @@ public class CadastrarCliente extends javax.swing.JFrame {
         String sobrenome = caixaTextoSobrenome.getText();
         String telefone = caixaTextoTelefone.getText();
         if(nome.isEmpty()|| sobrenome.isEmpty()|| telefone.isEmpty()){
-            JOptionPane.showMessageDialog(this,"Existem campos em branco porfavor preencha todos os campos","",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,"Existem campos em branco por favor preencha todos os campos","",JOptionPane.ERROR_MESSAGE);
             return;
         }
         try{
@@ -325,10 +333,33 @@ public class CadastrarCliente extends javax.swing.JFrame {
         catch(IllegalArgumentException e){
             JOptionPane.showMessageDialog(this,"Telefone invalido","",JOptionPane.ERROR_MESSAGE);
         }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(this,"Campo nome e sobrenome so permite letras","",JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_botaoAdicionarActionPerformed
 
     private void botaoEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarActionPerformed
-        // TODO add your handling code here:
+        int linhaSelecionada = tabelaClientes.getSelectedRow();
+        //caso nenhuma linha selecionada
+        if(linhaSelecionada == -1){
+            JOptionPane.showMessageDialog(this,"Nenhuma linha foi selecionada");
+            return;
+        }
+        String telefone = tabelaClientes.getValueAt(linhaSelecionada, 2).toString();
+        BancoDados bd = BancoDados.getInstance();
+        Cliente cliente = null;
+        for(int i = 0; i<bd.getListaCliente().size();i++){
+            if(telefone.equals(bd.getListaCliente().get(i).getTelefone())){
+                cliente = bd.getListaCliente().get(i);
+            }
+        }
+        if(cliente == null){
+            JOptionPane.showMessageDialog(this, "Cliente não encontrado no banco de dados", "", JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+            EditarCliente editar = new EditarCliente(cliente);
+            editar.setVisible(true);
+        }
     }//GEN-LAST:event_botaoEditarActionPerformed
 
     private void caixaTextoPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caixaTextoPesquisaActionPerformed

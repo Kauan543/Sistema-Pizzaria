@@ -11,14 +11,14 @@ import java.util.ArrayList;
  * @author Kauan
  */
 public class BancoDados {
-    // Variável que guarda a ÚNICA instância da classe
+    // Variável que guarda a unica instancia da classe
     private static BancoDados instanciaUnica;
     private ArrayList<Cliente> listaCliente;
     // Construtor privado para impedir a instacia dessa classe por outras classes
     private BancoDados() {
         listaCliente = new ArrayList<>();
     }
-    // Método público que retorno essa unica instancia
+    // Metods que retorno essa unica instancia
     public static BancoDados getInstance() {
         if (instanciaUnica == null) {
             instanciaUnica = new BancoDados();
