@@ -56,8 +56,9 @@ public class EditarCliente extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         MenuClientes = new javax.swing.JMenu();
         MenuClientesCadastrados = new javax.swing.JMenuItem();
-        menuCadastrarSabor = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        MenuCadastrarSabor = new javax.swing.JMenu();
+        MenuAtualizarPreco = new javax.swing.JMenuItem();
+        MenuCadastrarSabor1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -232,13 +233,17 @@ public class EditarCliente extends javax.swing.JFrame {
 
         jMenuBar1.add(MenuClientes);
 
-        menuCadastrarSabor.setText("Sabor");
+        MenuCadastrarSabor.setText("Sabor");
 
-        jMenuItem1.setText("Cadastrar Sabor");
-        jMenuItem1.addActionListener(this::jMenuItem1ActionPerformed);
-        menuCadastrarSabor.add(jMenuItem1);
+        MenuAtualizarPreco.setText("Atualizar Preço");
+        MenuAtualizarPreco.addActionListener(this::MenuAtualizarPrecoActionPerformed);
+        MenuCadastrarSabor.add(MenuAtualizarPreco);
 
-        jMenuBar1.add(menuCadastrarSabor);
+        MenuCadastrarSabor1.setText("Cadastrar Sabor");
+        MenuCadastrarSabor1.addActionListener(this::MenuCadastrarSabor1ActionPerformed);
+        MenuCadastrarSabor.add(MenuCadastrarSabor1);
+
+        jMenuBar1.add(MenuCadastrarSabor);
 
         setJMenuBar(jMenuBar1);
 
@@ -294,13 +299,19 @@ public class EditarCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoAdicionarActionPerformed
 
     private void MenuClientesCadastradosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuClientesCadastradosActionPerformed
-        // TODO add your handling code here:
+        CadastrarCliente cc = new CadastrarCliente();
+        cc.setVisible(true);
     }//GEN-LAST:event_MenuClientesCadastradosActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        CadastrarSabor cs = new CadastrarSabor();
+    private void MenuAtualizarPrecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAtualizarPrecoActionPerformed
+        AtualizarPreco atualizar = new AtualizarPreco();
+        atualizar.setVisible(true);
+    }//GEN-LAST:event_MenuAtualizarPrecoActionPerformed
+
+    private void MenuCadastrarSabor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuCadastrarSabor1ActionPerformed
+         CadastrarSabor cs = new CadastrarSabor();
         cs.setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_MenuCadastrarSabor1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -328,6 +339,9 @@ public class EditarCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem MenuAtualizarPreco;
+    private javax.swing.JMenu MenuCadastrarSabor;
+    private javax.swing.JMenuItem MenuCadastrarSabor1;
     private javax.swing.JMenu MenuClientes;
     private javax.swing.JMenuItem MenuClientesCadastrados;
     private javax.swing.JButton botaoAdicionar;
@@ -340,13 +354,11 @@ public class EditarCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JMenu menuCadastrarSabor;
     // End of variables declaration//GEN-END:variables
 }

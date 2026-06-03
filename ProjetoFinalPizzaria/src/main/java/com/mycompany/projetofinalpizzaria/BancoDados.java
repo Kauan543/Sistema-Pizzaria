@@ -21,9 +21,14 @@ public class BancoDados {
         listaCliente = new ArrayList<>();
         listaSabor = new ArrayList<>();
         listaTipo = new ArrayList<>();
-        listaTipo.add(new TipoPizza("Simples", 0));
-        listaTipo.add(new TipoPizza("Especial", 0));
-        listaTipo.add(new TipoPizza("Premium", 0));
+        try{
+            listaTipo.add(new TipoPizza("Simples", 0));
+            listaTipo.add(new TipoPizza("Especial", 0));
+            listaTipo.add(new TipoPizza("Premium", 0));
+        }
+        catch(Exception e){
+            
+        }
     }
 
     public ArrayList<Sabor> getListaSabor() {

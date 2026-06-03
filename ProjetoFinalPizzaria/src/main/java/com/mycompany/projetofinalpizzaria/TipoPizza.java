@@ -12,7 +12,11 @@ class TipoPizza {
     private String categoria;
     private double precoPorCentimentroQuadrado;
 
-    public TipoPizza(String categoria, double precoPorCentimentroQuadrado) {
+    public TipoPizza(String categoria, double precoPorCentimentroQuadrado) throws Exception{
+        String precoTeste = String.valueOf(precoPorCentimentroQuadrado);
+        if(!precoTeste.matches("\\d+(\\.\\d{1,2})?")){
+            throw new Exception("So permite ate dois numero de pois da virgula");
+        }
         this.categoria = categoria;
         this.precoPorCentimentroQuadrado = precoPorCentimentroQuadrado;
     }
@@ -30,7 +34,11 @@ class TipoPizza {
         return precoPorCentimentroQuadrado;
     }
 
-    public void setPrecoPorCentimentroQuadrado(double precoPorCentimentroQuadrado) {
+    public void setPrecoPorCentimentroQuadrado(double precoPorCentimentroQuadrado)throws Exception {
+        String precoTeste = String.valueOf(precoPorCentimentroQuadrado);
+        if(!precoTeste.matches("\\d+(\\.\\d{1,2})?")){
+            throw new Exception("So permite ate dois numero de pois da virgula");
+        }
         this.precoPorCentimentroQuadrado = precoPorCentimentroQuadrado;
     }
     

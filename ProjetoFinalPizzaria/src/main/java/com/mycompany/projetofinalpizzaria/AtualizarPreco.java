@@ -4,29 +4,42 @@
  */
 package com.mycompany.projetofinalpizzaria;
 
+import java.util.InputMismatchException;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Kauan
  */
-public class CadastrarSabor extends javax.swing.JFrame {
+public class AtualizarPreco extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CadastrarSabor.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AtualizarPreco.class.getName());
     private Cliente clienteEmEdicao;
     /**
      * Creates new form EditarCliente
      */
-    public CadastrarSabor() {
+    public AtualizarPreco() {
         initComponents();
-        MenuCadastrarSabor1.setEnabled(false);
+        MenuAtualizarPreco.setEnabled(false);
         preencherComboTipo();
+        preencherCampoValor();
     }
     public void preencherComboTipo(){
         BancoDados bd = BancoDados.getInstance();
         for(int i = 0; i < bd.getListaTipo().size();i++){
             comboTipoPizza.addItem(bd.getListaTipo().get(i).getCategoria());
         }
+    }
+    public void preencherCampoValor(){
+        String tipo = (String) comboTipoPizza.getSelectedItem();
+        BancoDados bd = BancoDados.getInstance();
+        for(int i = 0; i < bd.getListaTipo().size();i++){
+                TipoPizza tipop = bd.getListaTipo().get(i);
+                if(tipop.getCategoria().equals(tipo)){
+                    caixaTextoPreco.setText(String.valueOf(tipop.getPrecoPorCentimentroQuadrado()));
+                    break;
+                }
+        }        
     }
         
     @SuppressWarnings("unchecked")
@@ -38,7 +51,7 @@ public class CadastrarSabor extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        caixaTextoNome = new javax.swing.JTextField();
+        caixaTextoPreco = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         botaoLimpar = new javax.swing.JButton();
@@ -62,8 +75,8 @@ public class CadastrarSabor extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe Print", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/pizza.png"))); // NOI18N
-        jLabel1.setText("Cadastrar Sabor");
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/money.png"))); // NOI18N
+        jLabel1.setText("Atualizar Preço");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -72,14 +85,14 @@ public class CadastrarSabor extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         jPanel1.add(jLabel1, gridBagConstraints);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Novo Sabor", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe Print", 1, 14), new java.awt.Color(0, 0, 0))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Novo Preço", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe Print", 1, 14), new java.awt.Color(0, 0, 0))); // NOI18N
         jPanel2.setOpaque(false);
 
         jLabel2.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setText("Nome");
+        jLabel2.setText("Preço (cm²)");
 
-        caixaTextoNome.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
+        caixaTextoPreco.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
@@ -93,8 +106,8 @@ public class CadastrarSabor extends javax.swing.JFrame {
         botaoLimpar.addActionListener(this::botaoLimparActionPerformed);
 
         botaoAdicionar.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
-        botaoAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/add.png"))); // NOI18N
-        botaoAdicionar.setText("Criar");
+        botaoAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/diskette.png"))); // NOI18N
+        botaoAdicionar.setText("Salvar");
         botaoAdicionar.addActionListener(this::botaoAdicionarActionPerformed);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -104,7 +117,7 @@ public class CadastrarSabor extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(botaoAdicionar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
                 .addComponent(botaoLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -133,28 +146,33 @@ public class CadastrarSabor extends javax.swing.JFrame {
                 .addGap(30, 30, 30))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(caixaTextoNome)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(comboTipoPizza, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(caixaTextoPreco)
+                .addContainerGap())
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(caixaTextoNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(23, 23, 23)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(comboTipoPizza, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(170, 170, 170)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(caixaTextoPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(159, 159, 159)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(11, Short.MAX_VALUE))
         );
@@ -223,6 +241,7 @@ public class CadastrarSabor extends javax.swing.JFrame {
         MenuCadastrarSabor.add(MenuAtualizarPreco);
 
         MenuCadastrarSabor1.setText("Cadastrar Sabor");
+        MenuCadastrarSabor1.addActionListener(this::MenuCadastrarSabor1ActionPerformed);
         MenuCadastrarSabor.add(MenuCadastrarSabor1);
 
         jMenuBar1.add(MenuCadastrarSabor);
@@ -243,16 +262,16 @@ public class CadastrarSabor extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void botaoLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLimparActionPerformed
-        caixaTextoNome.setText("");
-
-    }//GEN-LAST:event_botaoLimparActionPerformed
+    private void MenuClientesCadastradosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuClientesCadastradosActionPerformed
+       CadastrarCliente cc = new CadastrarCliente();
+       cc.setVisible(true);
+    }//GEN-LAST:event_MenuClientesCadastradosActionPerformed
 
     private void botaoAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarActionPerformed
-        String nomeSabor = caixaTextoNome.getText();
         String tipo = (String) comboTipoPizza.getSelectedItem();
+        String preco = caixaTextoPreco.getText();
         BancoDados bd = BancoDados.getInstance();
-        if(nomeSabor.isEmpty()|| tipo.isEmpty()){
+        if(tipo.isEmpty()||preco.isEmpty()){
             JOptionPane.showMessageDialog(this,"Existem campos em branco por favor preencha todos os campos","",JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -260,33 +279,40 @@ public class CadastrarSabor extends javax.swing.JFrame {
             for(int i = 0; i < bd.getListaTipo().size();i++){
                 TipoPizza tipop = bd.getListaTipo().get(i);
                 if(tipop.getCategoria().equals(tipo)){
-                    Sabor sabor = new Sabor(nomeSabor,tipop);
-                    bd.getListaSabor().add(sabor);
-                    JOptionPane.showMessageDialog(this,"Sabor Adicionado");
+                    tipop.setPrecoPorCentimentroQuadrado(Double.parseDouble(preco));
+                    JOptionPane.showMessageDialog(this,"Valor alterado para o tipo de pizza");
+                    preencherCampoValor();
                     return;
                 }
             }
         }
+        catch(InputMismatchException e){
+            JOptionPane.showMessageDialog(this,"Somentes numeros podem ser digitados no campo preço","",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         catch(Exception e){
-            JOptionPane.showMessageDialog(this,"Somentes letras podem ser utilizadas para nome do sabor","",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,"O campo preço, so aceita valores ate 2 numeros depois do ponto","",JOptionPane.ERROR_MESSAGE);
             return;
         }
         JOptionPane.showMessageDialog(this,"Erro ao encontrar o tipo","",JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_botaoAdicionarActionPerformed
 
     private void comboTipoPizzaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTipoPizzaActionPerformed
-        
+        preencherCampoValor();
     }//GEN-LAST:event_comboTipoPizzaActionPerformed
 
-    private void MenuClientesCadastradosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuClientesCadastradosActionPerformed
-        CadastrarCliente cc = new CadastrarCliente();
-        cc.setVisible(true);
-    }//GEN-LAST:event_MenuClientesCadastradosActionPerformed
+    private void botaoLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLimparActionPerformed
+        caixaTextoPreco.setText("");
+    }//GEN-LAST:event_botaoLimparActionPerformed
 
     private void MenuAtualizarPrecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAtualizarPrecoActionPerformed
-        AtualizarPreco atualizar = new AtualizarPreco();
-        atualizar.setVisible(true);
+        // TODO add your handling code here:
     }//GEN-LAST:event_MenuAtualizarPrecoActionPerformed
+
+    private void MenuCadastrarSabor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuCadastrarSabor1ActionPerformed
+        CadastrarSabor cs = new CadastrarSabor();
+        cs.setVisible(true);
+    }//GEN-LAST:event_MenuCadastrarSabor1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -310,7 +336,7 @@ public class CadastrarSabor extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new CadastrarSabor().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new AtualizarPreco().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -321,7 +347,7 @@ public class CadastrarSabor extends javax.swing.JFrame {
     private javax.swing.JMenuItem MenuClientesCadastrados;
     private javax.swing.JButton botaoAdicionar;
     private javax.swing.JButton botaoLimpar;
-    private javax.swing.JTextField caixaTextoNome;
+    private javax.swing.JTextField caixaTextoPreco;
     private javax.swing.JComboBox<String> comboTipoPizza;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

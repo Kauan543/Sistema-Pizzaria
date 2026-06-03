@@ -213,8 +213,8 @@ public class ProjetoFinalPizzariaTest {
     public void testSabor1() {
         //testar se lança exceção com sabor invalido
         String teste;
-        TipoPizza tipo = new TipoPizza("Simples", 0);
         try{
+            TipoPizza tipo = new TipoPizza("Simples", 0);
             Sabor sabor = new Sabor("Calabresa1!", tipo);
             teste = "Passou";
         }
@@ -227,9 +227,9 @@ public class ProjetoFinalPizzariaTest {
     @Test
     public void testSabor2() {
         //testar se instancia sabor normalmente
-        String teste;
-        TipoPizza tipo = new TipoPizza("Simples", 0);
+        String teste; 
         try{
+            TipoPizza tipo = new TipoPizza("Simples", 0);
             Sabor sabor = new Sabor("Calabresa", tipo);
             teste = "Passou";
         }
@@ -239,5 +239,32 @@ public class ProjetoFinalPizzariaTest {
         assertEquals("Passou", teste);
         
     }
-    
+    @Test
+    public void testTipoPizza1() {
+        //testar se instancia tipo pizza normalmente
+        String teste; 
+        try{
+            TipoPizza tipo = new TipoPizza("Simples", 2.50);
+            teste = "Passou";
+        }
+        catch(Exception e){
+            teste = "Falhou";
+        }
+        assertEquals("Passou", teste);
+        
+    }
+     @Test
+    public void testTipoPizza2() {
+        //testar se lança exceção com tipoPizza invalido
+        String teste; 
+        try{
+            TipoPizza tipo = new TipoPizza("Simples", 2.512);
+            teste = "Passou";
+        }
+        catch(Exception e){
+            teste = "Falhou";
+        }
+        assertEquals("Falhou", teste);
+        
+    }
 }
