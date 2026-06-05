@@ -53,6 +53,8 @@ public class CadastrarSabor extends javax.swing.JFrame {
         MenuCadastrarSabor = new javax.swing.JMenu();
         MenuAtualizarPreco = new javax.swing.JMenuItem();
         MenuCadastrarSabor1 = new javax.swing.JMenuItem();
+        MenuPedido = new javax.swing.JMenu();
+        MenuPedidoCliente = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -223,9 +225,18 @@ public class CadastrarSabor extends javax.swing.JFrame {
         MenuCadastrarSabor.add(MenuAtualizarPreco);
 
         MenuCadastrarSabor1.setText("Cadastrar Sabor");
+        MenuCadastrarSabor1.addActionListener(this::MenuCadastrarSabor1ActionPerformed);
         MenuCadastrarSabor.add(MenuCadastrarSabor1);
 
         jMenuBar1.add(MenuCadastrarSabor);
+
+        MenuPedido.setText("Pedido");
+
+        MenuPedidoCliente.setText("Pedido Cliente");
+        MenuPedidoCliente.addActionListener(this::MenuPedidoClienteActionPerformed);
+        MenuPedido.add(MenuPedidoCliente);
+
+        jMenuBar1.add(MenuPedido);
 
         setJMenuBar(jMenuBar1);
 
@@ -288,6 +299,15 @@ public class CadastrarSabor extends javax.swing.JFrame {
         atualizar.setVisible(true);
     }//GEN-LAST:event_MenuAtualizarPrecoActionPerformed
 
+    private void MenuCadastrarSabor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuCadastrarSabor1ActionPerformed
+        CadastrarSabor cs = new CadastrarSabor();
+        cs.setVisible(true);
+    }//GEN-LAST:event_MenuCadastrarSabor1ActionPerformed
+
+    private void MenuPedidoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuPedidoClienteActionPerformed
+
+    }//GEN-LAST:event_MenuPedidoClienteActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -319,6 +339,8 @@ public class CadastrarSabor extends javax.swing.JFrame {
     private javax.swing.JMenuItem MenuCadastrarSabor1;
     private javax.swing.JMenu MenuClientes;
     private javax.swing.JMenuItem MenuClientesCadastrados;
+    private javax.swing.JMenu MenuPedido;
+    private javax.swing.JMenuItem MenuPedidoCliente;
     private javax.swing.JButton botaoAdicionar;
     private javax.swing.JButton botaoLimpar;
     private javax.swing.JTextField caixaTextoNome;

@@ -9,6 +9,5 @@ package com.mycompany.projetofinalpizzaria;
  * @author Kauan
  */
 public abstract class Forma {
-    
     public abstract double calculaArea();
 }

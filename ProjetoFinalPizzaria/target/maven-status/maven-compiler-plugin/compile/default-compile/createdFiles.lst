@@ -5,8 +5,10 @@ com\mycompany\projetofinalpizzaria\PreencherTabelaCliente.class
 com\mycompany\projetofinalpizzaria\CadastrarSabor.class
 com\mycompany\projetofinalpizzaria\Quadrado.class
 com\mycompany\projetofinalpizzaria\CadastrarCliente$2.class
+com\mycompany\projetofinalpizzaria\NovaPizza$1.class
 com\mycompany\projetofinalpizzaria\Pizza.class
 com\mycompany\projetofinalpizzaria\Sabor.class
+com\mycompany\projetofinalpizzaria\NovaPizza.class
 com\mycompany\projetofinalpizzaria\PreencherTabelaCliente$1.class
 com\mycompany\projetofinalpizzaria\Forma.class
 com\mycompany\projetofinalpizzaria\CadastrarCliente.class

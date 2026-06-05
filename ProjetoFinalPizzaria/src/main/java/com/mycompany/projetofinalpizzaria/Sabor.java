@@ -13,7 +13,7 @@ public class Sabor {
     private TipoPizza tipo;
 
     public Sabor(String sabor, TipoPizza tipo) throws Exception{
-        if(!sabor.matches("[a-zA-Z]+")){
+        if(!sabor.matches("[a-zA-Z ]+")){
             throw new Exception("Sabor so permite letras");
         }
         this.sabor = sabor;
@@ -33,7 +33,7 @@ public class Sabor {
     }
 
     public void setSabor(String sabor)throws Exception {
-        if(!sabor.matches("[a-zA-Z]+")){
+        if(!sabor.matches("[a-zA-Z ]+")){
             throw new Exception("Sabor so permite letras");
         }
         this.sabor = sabor;
