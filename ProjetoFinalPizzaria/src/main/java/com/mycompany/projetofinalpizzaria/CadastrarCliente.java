@@ -340,6 +340,13 @@ public class CadastrarCliente extends javax.swing.JFrame {
         String nome = caixaTextoNome.getText();
         String sobrenome = caixaTextoSobrenome.getText();
         String telefone = caixaTextoTelefone.getText();
+        BancoDados bd = BancoDados.getInstance();
+        for(int i = 0; i<bd.getListaCliente().size();i++){
+            if(telefone.equals(bd.getListaCliente().get(i).getTelefone())){
+                JOptionPane.showMessageDialog(this,"Já Existe cliente cadastrado com este telefone","",JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
         if(nome.isEmpty()|| sobrenome.isEmpty()|| telefone.isEmpty()){
             JOptionPane.showMessageDialog(this,"Existem campos em branco por favor preencha todos os campos","",JOptionPane.ERROR_MESSAGE);
             return;
@@ -470,7 +477,8 @@ public class CadastrarCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_MenuCadastrarSabor1ActionPerformed
 
     private void MenuPedidoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuPedidoClienteActionPerformed
-
+        RealizarPedido rp = new RealizarPedido();
+        rp.setVisible(true);
     }//GEN-LAST:event_MenuPedidoClienteActionPerformed
 
     /**

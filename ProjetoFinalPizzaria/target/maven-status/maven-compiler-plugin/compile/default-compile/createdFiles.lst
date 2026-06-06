@@ -11,6 +11,7 @@ com\mycompany\projetofinalpizzaria\Sabor.class
 com\mycompany\projetofinalpizzaria\NovaPizza.class
 com\mycompany\projetofinalpizzaria\PreencherTabelaCliente$1.class
 com\mycompany\projetofinalpizzaria\Forma.class
+com\mycompany\projetofinalpizzaria\RealizarPedido.class
 com\mycompany\projetofinalpizzaria\CadastrarCliente.class
 com\mycompany\projetofinalpizzaria\ProjetoFinalPizzaria.class
 com\mycompany\projetofinalpizzaria\BancoDados.class

@@ -15,12 +15,22 @@ public class Pedido {
     private double precoTotal;
     private ArrayList<Pizza>pizza;
     private Estado estado;
+    private Cliente cliente;
 
-    public Pedido(int idPedido, double precoTotal, ArrayList<Pizza> pizza, Estado estado) {
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Pedido(int idPedido, double precoTotal, ArrayList<Pizza> pizza, Estado estado, Cliente cliente) {
         this.idPedido = idPedido;
         this.precoTotal = precoTotal;
         this.pizza = pizza;
         this.estado = estado;
+        this.cliente = cliente;
     }
 
     public int getIdPedido() {

@@ -16,15 +16,38 @@ public class BancoDados {
     private ArrayList<Cliente> listaCliente;
     private ArrayList<Sabor> listaSabor;
     private ArrayList<TipoPizza> listaTipo;
+    private ArrayList<Pedido> listaPedido;
+    private ArrayList<Estado> listaEstado;
+
+    public ArrayList<Pedido> getListaPedido() {
+        return listaPedido;
+    }
+
+    public void setListaPedido(ArrayList<Pedido> listaPedido) {
+        this.listaPedido = listaPedido;
+    }
+
+    public ArrayList<Estado> getListaEstado() {
+        return listaEstado;
+    }
+
+    public void setListaEstado(ArrayList<Estado> listaEstado) {
+        this.listaEstado = listaEstado;
+    }
     // Construtor privado para impedir a instacia dessa classe por outras classes
     private BancoDados() {
         listaCliente = new ArrayList<>();
         listaSabor = new ArrayList<>();
         listaTipo = new ArrayList<>();
+        listaEstado = new ArrayList<>();
+        listaPedido = new ArrayList<>();
         try{
             listaTipo.add(new TipoPizza("Simples", 0));
             listaTipo.add(new TipoPizza("Especial", 0));
             listaTipo.add(new TipoPizza("Premium", 0));
+            listaEstado.add(new Estado("Aberto"));
+            listaEstado.add(new Estado("A caminho"));
+            listaEstado.add(new Estado("Entregue"));
         }
         catch(Exception e){
             
