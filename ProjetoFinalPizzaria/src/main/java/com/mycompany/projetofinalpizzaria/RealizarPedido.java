@@ -4,6 +4,9 @@
  */
 package com.mycompany.projetofinalpizzaria;
 
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Kauan
@@ -38,14 +41,15 @@ public class RealizarPedido extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        caixaTextoTelefone = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        botaoBuscar = new javax.swing.JButton();
         botaoAtualizar = new javax.swing.JButton();
         botaoNovoPedido = new javax.swing.JButton();
+        lugarNomeCliente = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabelasPedidosCliente = new javax.swing.JTable();
         AreaPedido = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaPedido = new javax.swing.JTable();
@@ -73,16 +77,21 @@ public class RealizarPedido extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Telefone para localizar o cliente");
 
-        jButton1.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/search.png"))); // NOI18N
-        jButton1.setText("Buscar");
-        jButton1.addActionListener(this::jButton1ActionPerformed);
+        botaoBuscar.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
+        botaoBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/search.png"))); // NOI18N
+        botaoBuscar.setText("Buscar");
+        botaoBuscar.addActionListener(this::botaoBuscarActionPerformed);
 
         botaoAtualizar.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
         botaoAtualizar.setText("Atualizar Pedido");
+        botaoAtualizar.addActionListener(this::botaoAtualizarActionPerformed);
 
         botaoNovoPedido.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
         botaoNovoPedido.setText("Novo Pedido");
+        botaoNovoPedido.addActionListener(this::botaoNovoPedidoActionPerformed);
+
+        lugarNomeCliente.setForeground(new java.awt.Color(0, 0, 0));
+        lugarNomeCliente.setText("Cliente:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -95,9 +104,10 @@ public class RealizarPedido extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(caixaTextoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(28, 28, 28)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(botaoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lugarNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(37, 37, 37)
                         .addComponent(botaoAtualizar)))
@@ -114,9 +124,11 @@ public class RealizarPedido extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                    .addComponent(caixaTextoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoBuscar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lugarNomeCliente)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(botaoAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,7 +141,7 @@ public class RealizarPedido extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pedidos Cleinte", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe Print", 1, 14), new java.awt.Color(0, 0, 0))); // NOI18N
         jPanel3.setOpaque(false);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabelasPedidosCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -137,7 +149,7 @@ public class RealizarPedido extends javax.swing.JFrame {
                 "N° Pedido", "Valor", "Estado"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabelasPedidosCliente);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -164,14 +176,15 @@ public class RealizarPedido extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Sabores", "Forma", "Preço", "Área"
             }
         ));
         jScrollPane2.setViewportView(tabelaPedido);
 
         botao2Pedido.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
-        botao2Pedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/add.png"))); // NOI18N
-        botao2Pedido.setText("Criar Pedido");
+        botao2Pedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/diskette.png"))); // NOI18N
+        botao2Pedido.setText("Salvar Pedido");
+        botao2Pedido.addActionListener(this::botao2PedidoActionPerformed);
 
         panelPedido.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -199,6 +212,7 @@ public class RealizarPedido extends javax.swing.JFrame {
         botao1Pedido.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
         botao1Pedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/add.png"))); // NOI18N
         botao1Pedido.setText("Adicionar pizza");
+        botao1Pedido.addActionListener(this::botao1PedidoActionPerformed);
 
         javax.swing.GroupLayout AreaPedidoLayout = new javax.swing.GroupLayout(AreaPedido);
         AreaPedido.setLayout(AreaPedidoLayout);
@@ -303,7 +317,25 @@ public class RealizarPedido extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    public void atualizarTabela(Pizza pizza, double valor, double area){ 
+        DefaultTableModel modelo = (DefaultTableModel)tabelaPedido.getModel();
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i< pizza.getSabor().size();i++){
+            sb.append(pizza.getSabor().get(i).getSabor()).append(";");
+        }
+        Object [] linha= {
+            sb.toString(),
+            pizza.getForma().getClass().getSimpleName(),
+            String.format("R$ %.2f", valor),
+            String.format("%.2f cm²", area),
+        };
+        modelo.addRow(linha); 
+    }
+    public void limparTabela() {
+        DefaultTableModel modelo = (DefaultTableModel) tabelaPedido.getModel();
+        modelo.setRowCount(0);
+    } 
     private void MenuClientesCadastradosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuClientesCadastradosActionPerformed
         CadastrarCliente cc = new CadastrarCliente();
         cc.setVisible(true);
@@ -323,9 +355,63 @@ public class RealizarPedido extends javax.swing.JFrame {
 
     }//GEN-LAST:event_MenuPedidoClienteActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void botaoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBuscarActionPerformed
+        String telefone = caixaTextoTelefone.getText();
+        BancoDados bd = BancoDados.getInstance();
+        boolean encontrado = false;
+        Cliente cliente= null;
+        for(int i = 0; i<bd.getListaCliente().size();i++){
+            if(telefone.equals(bd.getListaCliente().get(i).getTelefone())){
+                cliente = bd.getListaCliente().get(i); 
+                lugarNomeCliente.setText("Cliente: " + cliente.getNome() + " " + cliente.getSobrenome());
+                encontrado = true;
+                break;
+            }
+        }
+        if(encontrado == false){
+            JOptionPane.showMessageDialog(this,"Cliente não encontrado!");
+            MenuPedidoCliente.setEnabled(false);
+            AreaPedido.setEnabled(false);
+            botao1Pedido.setEnabled(false);
+            botao2Pedido.setEnabled(false);
+            tabelaPedido.setEnabled(false);
+            panelPedido.setEnabled(false);
+            botaoNovoPedido.setEnabled(false);
+            botaoAtualizar.setEnabled(false);
+            lugarNomeCliente.setText("Cliente: ");
+            limparTabela();
+            return;
+        }
+        else{
+            //listar todos os pedidos do cliente
+            PreecherTabelaPedidoCliente  preenchimento = new PreecherTabelaPedidoCliente();
+            tabelasPedidosCliente.setModel(preenchimento.gerarModelo2(cliente));
+            botaoAtualizar.setEnabled(true);
+            botaoNovoPedido.setEnabled(true);
+        }
+    }//GEN-LAST:event_botaoBuscarActionPerformed
+
+    private void botaoAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAtualizarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_botaoAtualizarActionPerformed
+
+    private void botao2PedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao2PedidoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botao2PedidoActionPerformed
+
+    private void botao1PedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao1PedidoActionPerformed
+       NovaPizza np = new NovaPizza(this);
+       np.setVisible(true);
+    }//GEN-LAST:event_botao1PedidoActionPerformed
+
+    private void botaoNovoPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovoPedidoActionPerformed
+        MenuPedidoCliente.setEnabled(true);
+        AreaPedido.setEnabled(true);
+        botao1Pedido.setEnabled(true);
+        botao2Pedido.setEnabled(true);
+        tabelaPedido.setEnabled(true);
+        panelPedido.setEnabled(true);
+    }//GEN-LAST:event_botaoNovoPedidoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -364,8 +450,9 @@ public class RealizarPedido extends javax.swing.JFrame {
     private javax.swing.JButton botao1Pedido;
     private javax.swing.JButton botao2Pedido;
     private javax.swing.JButton botaoAtualizar;
+    private javax.swing.JButton botaoBuscar;
     private javax.swing.JButton botaoNovoPedido;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JTextField caixaTextoTelefone;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;
@@ -374,9 +461,9 @@ public class RealizarPedido extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel lugarNomeCliente;
     private javax.swing.JPanel panelPedido;
     private javax.swing.JTable tabelaPedido;
+    private javax.swing.JTable tabelasPedidosCliente;
     // End of variables declaration//GEN-END:variables
 }

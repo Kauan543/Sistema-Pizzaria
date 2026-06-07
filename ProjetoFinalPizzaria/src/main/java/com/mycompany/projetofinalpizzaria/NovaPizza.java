@@ -4,6 +4,7 @@
  */
 package com.mycompany.projetofinalpizzaria;
 
+import java.util.ArrayList;
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -19,7 +20,10 @@ public class NovaPizza extends javax.swing.JFrame {
     /**
      * Creates new form CadastrarCliente
      */
-    public NovaPizza() {
+    private double precoTotalCalculado = 0.0;
+    private RealizarPedido telaPedido;
+    public NovaPizza(RealizarPedido telaPedido) {
+        this.telaPedido = telaPedido;
         initComponents();
         MenuPedidoCliente.setEnabled(false);
         preencherComboSabor();
@@ -103,6 +107,7 @@ public class NovaPizza extends javax.swing.JFrame {
         }
         
         valorTotal = area * precoPorCmQuadrado;
+        this.precoTotalCalculado = valorTotal;
         lugarPreco.setText(String.format("Preço: R$: %.2f", valorTotal));
 
     } catch (NumberFormatException e) {
@@ -300,6 +305,8 @@ public class NovaPizza extends javax.swing.JFrame {
 
         jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
+
+        caixaTextoLado.addActionListener(this::caixaTextoLadoActionPerformed);
 
         lugarMedida.setBackground(new java.awt.Color(245, 245, 220));
         lugarMedida.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
@@ -521,6 +528,7 @@ public class NovaPizza extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/confirm.png"))); // NOI18N
         jButton1.setText("Confirmar");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jButton2.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/close.png"))); // NOI18N
@@ -727,6 +735,64 @@ public class NovaPizza extends javax.swing.JFrame {
         calcularPreco();
     }//GEN-LAST:event_CheckCircularActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (precoTotalCalculado == 0.0) {
+            JOptionPane.showMessageDialog(this, "Calcule o preço preenchendo as dimensões corretamente antes de confirmar.");
+            return;
+        }
+        double area = 0.0;
+        Forma f = null;
+        try{
+            if (CheckArea.isSelected() && !caixaTextoArea.getText().isEmpty()) {
+                area = Double.parseDouble(caixaTextoArea.getText());
+                double lado = 0;
+                if (CheckQuadrada.isSelected()) {
+                    f = new Quadrado();
+                } else if (CheckCircular.isSelected()) {
+                    f = new Circulo();
+                } else if (CheckTriangular.isSelected()) {
+                    f = new Triangulo();
+                }
+            }
+        
+            else if(CheckDimensao.isSelected() && !caixaTextoLado.getText().isEmpty()){
+                double dimensao = Double.parseDouble(caixaTextoLado.getText());
+                if (CheckQuadrada.isSelected()) {
+                    f = new Quadrado(dimensao);
+                } else if (CheckCircular.isSelected()) {
+                    f = new Circulo(dimensao);
+                } else if (CheckTriangular.isSelected()) {
+                    f = new Triangulo(dimensao);
+                }
+                area = f.calculaArea();
+            }
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Erro ao instaciar forma");
+        }
+        ArrayList<Sabor> sabores = new ArrayList<>();
+        if (comboSabor1.getSelectedItem() != null) {
+            String nome1 = comboSabor1.getSelectedItem().toString();
+            Sabor sabor1= new Sabor(nome1);
+            sabores.add(sabor1);
+        }
+        if (CheckSabor2.isSelected() && comboSabor2.getSelectedItem() != null) {
+            String nome2 = comboSabor2.getSelectedItem().toString();
+            Sabor sabor2= new Sabor(nome2);
+            sabores.add(sabor2);
+        }
+        
+        Pizza pizza = new Pizza(area,f,sabores);
+        if (this.telaPedido != null) {
+            this.telaPedido.atualizarTabela(pizza, precoTotalCalculado, area);
+        }
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void caixaTextoLadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caixaTextoLadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_caixaTextoLadoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -749,7 +815,7 @@ public class NovaPizza extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new NovaPizza().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new NovaPizza(null).setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
