@@ -1,14 +1,12 @@
 com\mycompany\projetofinalpizzaria\AtualizarPreco.class
 com\mycompany\projetofinalpizzaria\Estado.class
 com\mycompany\projetofinalpizzaria\TipoPizza.class
-com\mycompany\projetofinalpizzaria\PreencherTabelaItemPedido$1.class
 com\mycompany\projetofinalpizzaria\PreencherTabelaCliente.class
 com\mycompany\projetofinalpizzaria\CadastrarSabor.class
 com\mycompany\projetofinalpizzaria\Quadrado.class
 com\mycompany\projetofinalpizzaria\CadastrarCliente$2.class
 com\mycompany\projetofinalpizzaria\NovaPizza$1.class
 com\mycompany\projetofinalpizzaria\Pizza.class
-com\mycompany\projetofinalpizzaria\PreencherTabelaItemPedido.class
 com\mycompany\projetofinalpizzaria\Sabor.class
 com\mycompany\projetofinalpizzaria\NovaPizza.class
 com\mycompany\projetofinalpizzaria\PreencherTabelaCliente$1.class
@@ -22,6 +20,7 @@ com\mycompany\projetofinalpizzaria\PreecherTabelaPedidoCliente$1.class
 com\mycompany\projetofinalpizzaria\Circulo.class
 com\mycompany\projetofinalpizzaria\Pedido.class
 com\mycompany\projetofinalpizzaria\CadastrarCliente$1.class
+com\mycompany\projetofinalpizzaria\RealizarPedido$1.class
 com\mycompany\projetofinalpizzaria\PreecherTabelaPedidoCliente.class
 com\mycompany\projetofinalpizzaria\Triangulo.class
 com\mycompany\projetofinalpizzaria\EditarCliente.class

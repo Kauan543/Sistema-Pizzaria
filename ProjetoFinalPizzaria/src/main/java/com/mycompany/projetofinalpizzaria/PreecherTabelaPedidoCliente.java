@@ -26,7 +26,7 @@ public class PreecherTabelaPedidoCliente {
                 Object [] linha= {
                 banco.getListaPedido().get(i).getIdPedido(),
                 banco.getListaPedido().get(i).getPrecoTotal(),
-                banco.getListaPedido().get(i).getEstado()
+                banco.getListaPedido().get(i).getEstado().getNome()
             };
             modelo.addRow(linha);
             }  

@@ -4,6 +4,7 @@
  */
 package com.mycompany.projetofinalpizzaria;
 
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -55,8 +56,9 @@ public class RealizarPedido extends javax.swing.JFrame {
         tabelaPedido = new javax.swing.JTable();
         botao2Pedido = new javax.swing.JButton();
         panelPedido = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        labelInformacoes = new javax.swing.JLabel();
         botao1Pedido = new javax.swing.JButton();
+        botao1Excluir = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         MenuClientes = new javax.swing.JMenu();
         MenuClientesCadastrados = new javax.swing.JMenuItem();
@@ -67,6 +69,11 @@ public class RealizarPedido extends javax.swing.JFrame {
         MenuPedidoCliente = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(245, 245, 220));
 
@@ -138,7 +145,7 @@ public class RealizarPedido extends javax.swing.JFrame {
                     .addGap(5, 5, 5)))
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pedidos Cleinte", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe Print", 1, 14), new java.awt.Color(0, 0, 0))); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pedidos Cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe Print", 1, 14), new java.awt.Color(0, 0, 0))); // NOI18N
         jPanel3.setOpaque(false);
 
         tabelasPedidosCliente.setModel(new javax.swing.table.DefaultTableModel(
@@ -188,9 +195,9 @@ public class RealizarPedido extends javax.swing.JFrame {
 
         panelPedido.setBackground(new java.awt.Color(204, 204, 204));
 
-        jLabel2.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setText("Resumo Pedido:");
+        labelInformacoes.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
+        labelInformacoes.setForeground(new java.awt.Color(0, 0, 0));
+        labelInformacoes.setText("Resumo Pedido: R$:0.00 | 0 Pizzas");
 
         javax.swing.GroupLayout panelPedidoLayout = new javax.swing.GroupLayout(panelPedido);
         panelPedido.setLayout(panelPedidoLayout);
@@ -198,14 +205,14 @@ public class RealizarPedido extends javax.swing.JFrame {
             panelPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelPedidoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(labelInformacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 517, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelPedidoLayout.setVerticalGroup(
             panelPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPedidoLayout.createSequentialGroup()
                 .addContainerGap(7, Short.MAX_VALUE)
-                .addComponent(jLabel2)
+                .addComponent(labelInformacoes)
                 .addContainerGap())
         );
 
@@ -214,31 +221,41 @@ public class RealizarPedido extends javax.swing.JFrame {
         botao1Pedido.setText("Adicionar pizza");
         botao1Pedido.addActionListener(this::botao1PedidoActionPerformed);
 
+        botao1Excluir.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
+        botao1Excluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/delete.png"))); // NOI18N
+        botao1Excluir.setText("Excluir");
+        botao1Excluir.addActionListener(this::botao1ExcluirActionPerformed);
+
         javax.swing.GroupLayout AreaPedidoLayout = new javax.swing.GroupLayout(AreaPedido);
         AreaPedido.setLayout(AreaPedidoLayout);
         AreaPedidoLayout.setHorizontalGroup(
             AreaPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(AreaPedidoLayout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(AreaPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(panelPedido, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE))
-                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AreaPedidoLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(botao2Pedido)
+                .addGap(20, 20, 20))
+            .addGroup(AreaPedidoLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
                 .addGroup(AreaPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AreaPedidoLayout.createSequentialGroup()
-                        .addComponent(botao2Pedido)
-                        .addGap(20, 20, 20))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AreaPedidoLayout.createSequentialGroup()
+                    .addGroup(AreaPedidoLayout.createSequentialGroup()
+                        .addGroup(AreaPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(panelPedido, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE))
+                        .addContainerGap())
+                    .addGroup(AreaPedidoLayout.createSequentialGroup()
+                        .addComponent(botao1Excluir, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(botao1Pedido, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37))))
+                        .addGap(18, 18, 18))))
         );
         AreaPedidoLayout.setVerticalGroup(
             AreaPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(AreaPedidoLayout.createSequentialGroup()
-                .addComponent(botao1Pedido)
-                .addGap(12, 12, 12)
+                .addContainerGap()
+                .addGroup(AreaPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botao1Excluir)
+                    .addComponent(botao1Pedido))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(7, 7, 7)
                 .addComponent(panelPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -330,7 +347,23 @@ public class RealizarPedido extends javax.swing.JFrame {
             String.format("R$ %.2f", valor),
             String.format("%.2f cm²", area),
         };
-        modelo.addRow(linha); 
+        modelo.addRow(linha);
+        atualizaValorTotal();
+    }
+    public void atualizaValorTotal(){
+        if(tabelaPedido.getRowCount() == 0){
+            labelInformacoes.setText("Resumo Pedido: R$:0.00 | 0 Pizzas");  
+        }
+        else{
+            int quantidadePizzas = tabelaPedido.getRowCount();
+            double somatorio = 0;
+            for(int i = 0; i< quantidadePizzas; i++){
+                String valor = (String)tabelaPedido.getValueAt(i, 2);
+                valor = valor.replace("R$ ", "").replace(",", ".");
+                somatorio += Double.parseDouble(valor); 
+            }
+            labelInformacoes.setText(String.format("Resumo Pedido: R$ %.2f | %d Pizzas", somatorio, quantidadePizzas));
+        }
     }
     public void limparTabela() {
         DefaultTableModel modelo = (DefaultTableModel) tabelaPedido.getModel();
@@ -396,7 +429,86 @@ public class RealizarPedido extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoAtualizarActionPerformed
 
     private void botao2PedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao2PedidoActionPerformed
-        // TODO add your handling code here:
+        if(tabelaPedido.getRowCount() == 0){
+            JOptionPane.showMessageDialog(this,"O pedido nao pode ser criado sem nenhum item", "",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        BancoDados bd = BancoDados.getInstance();
+        Estado estado = bd.getListaEstado().get(0); 
+        String telefone = caixaTextoTelefone.getText();
+        boolean encontrado = false;
+        Cliente cliente= null;
+        for(int i = 0; i<bd.getListaCliente().size();i++){
+            if(telefone.equals(bd.getListaCliente().get(i).getTelefone())){
+                cliente = bd.getListaCliente().get(i); 
+                encontrado = true;
+                break;
+            }
+        }
+        if(encontrado == false){
+            JOptionPane.showMessageDialog(this,"Erro ao encontrar cliente para atribuir em pedido", "",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int quantidadePizzas = tabelaPedido.getRowCount();
+        double valorTotal = 0;
+        ArrayList<Pizza> pizzas = new ArrayList<>();
+        for(int i = 0; i< quantidadePizzas; i++){ 
+            ArrayList<Sabor> sabores = new ArrayList<>();
+            String valor = (String)tabelaPedido.getValueAt(i, 2);
+            valor = valor.replace("R$ ", "").replace(",", ".");
+            valorTotal += Double.parseDouble(valor);
+            String sabor = (String)tabelaPedido.getValueAt(i, 0);
+            // separa os sabores, cada um em uma string
+            String[] nomesSabores = sabor.split(";");
+            for(int j = 0; j < nomesSabores.length;j++){
+                for(int l = 0; l < bd.getListaSabor().size();l++){
+                    Sabor s = bd.getListaSabor().get(l);
+                    if(s.getSabor().equals(nomesSabores[j])){
+                        sabores.add(s);
+                        break;
+                    }
+                }
+            }
+            String nomeForma = (String)tabelaPedido.getValueAt(i,1);
+            Forma f;
+            if(nomeForma.equals("Circulo")){
+                f = new Circulo();
+            }
+            else if(nomeForma.equals("Triangulo")){
+                f = new Triangulo();
+            }
+            else if(nomeForma.equals("Quadrado")){
+                f = new Quadrado();
+            }
+            else{
+                JOptionPane.showMessageDialog(this,"Erro ao encotrar formato pizza", "",JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            String valorArea = (String)tabelaPedido.getValueAt(i,3);
+            valorArea = valorArea.replace(" cm²", "").replace(",", ".");
+            double areaConvertida = Double.parseDouble(valorArea); 
+            Pizza p = new Pizza(areaConvertida, f ,sabores);
+            pizzas.add(p);
+        }
+        int idPedido = bd.getListaPedido().size() + 1;
+        Pedido pedido = new Pedido(idPedido, valorTotal, pizzas, estado, cliente);
+        if(pedido == null){
+            JOptionPane.showMessageDialog(this,"Erro ao criar pedido", "",JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+            bd.getListaPedido().add(pedido);
+            MenuPedidoCliente.setEnabled(false);
+            AreaPedido.setEnabled(false);
+            botao1Pedido.setEnabled(false);
+            botao2Pedido.setEnabled(false);
+            tabelaPedido.setEnabled(false);
+            panelPedido.setEnabled(false);
+            botaoNovoPedido.setEnabled(false);
+            botaoAtualizar.setEnabled(false);
+            lugarNomeCliente.setText("Cliente: ");
+            limparTabela();
+        }
+        
     }//GEN-LAST:event_botao2PedidoActionPerformed
 
     private void botao1PedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao1PedidoActionPerformed
@@ -412,6 +524,23 @@ public class RealizarPedido extends javax.swing.JFrame {
         tabelaPedido.setEnabled(true);
         panelPedido.setEnabled(true);
     }//GEN-LAST:event_botaoNovoPedidoActionPerformed
+
+    private void botao1ExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao1ExcluirActionPerformed
+        int linhaSelecionada = tabelaPedido.getSelectedRow();
+        //caso nenhuma linha selecionada
+        if(linhaSelecionada == -1){
+            JOptionPane.showMessageDialog(this,"Nenhuma linha foi selecionada");
+            return;
+        }
+        DefaultTableModel tabela =(DefaultTableModel) tabelaPedido.getModel();
+        //remove linha do modelo da tabela
+        tabela.removeRow(linhaSelecionada);
+        atualizaValorTotal();
+    }//GEN-LAST:event_botao1ExcluirActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments
@@ -447,6 +576,7 @@ public class RealizarPedido extends javax.swing.JFrame {
     private javax.swing.JMenuItem MenuClientesCadastrados;
     private javax.swing.JMenu MenuPedido;
     private javax.swing.JMenuItem MenuPedidoCliente;
+    private javax.swing.JButton botao1Excluir;
     private javax.swing.JButton botao1Pedido;
     private javax.swing.JButton botao2Pedido;
     private javax.swing.JButton botaoAtualizar;
@@ -454,13 +584,13 @@ public class RealizarPedido extends javax.swing.JFrame {
     private javax.swing.JButton botaoNovoPedido;
     private javax.swing.JTextField caixaTextoTelefone;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel labelInformacoes;
     private javax.swing.JLabel lugarNomeCliente;
     private javax.swing.JPanel panelPedido;
     private javax.swing.JTable tabelaPedido;
