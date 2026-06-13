@@ -55,6 +55,7 @@ public class CadastrarSabor extends javax.swing.JFrame {
         MenuCadastrarSabor1 = new javax.swing.JMenuItem();
         MenuPedido = new javax.swing.JMenu();
         MenuPedidoCliente = new javax.swing.JMenuItem();
+        menuVerPedidos = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -236,6 +237,10 @@ public class CadastrarSabor extends javax.swing.JFrame {
         MenuPedidoCliente.addActionListener(this::MenuPedidoClienteActionPerformed);
         MenuPedido.add(MenuPedidoCliente);
 
+        menuVerPedidos.setText("Visualizar Pedidos");
+        menuVerPedidos.addActionListener(this::menuVerPedidosActionPerformed);
+        MenuPedido.add(menuVerPedidos);
+
         jMenuBar1.add(MenuPedido);
 
         setJMenuBar(jMenuBar1);
@@ -305,9 +310,13 @@ public class CadastrarSabor extends javax.swing.JFrame {
     }//GEN-LAST:event_MenuCadastrarSabor1ActionPerformed
 
     private void MenuPedidoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuPedidoClienteActionPerformed
-        RealizarPedido rp = new RealizarPedido();
-        rp.setVisible(true);
+
     }//GEN-LAST:event_MenuPedidoClienteActionPerformed
+
+    private void menuVerPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuVerPedidosActionPerformed
+        VisualizarPedidos vp = new VisualizarPedidos();
+        vp.setVisible(true);
+    }//GEN-LAST:event_menuVerPedidosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -356,5 +365,6 @@ public class CadastrarSabor extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JMenuItem menuVerPedidos;
     // End of variables declaration//GEN-END:variables
 }

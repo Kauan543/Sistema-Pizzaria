@@ -1,6 +1,7 @@
 com\mycompany\projetofinalpizzaria\AtualizarPreco.class
 com\mycompany\projetofinalpizzaria\Estado.class
 com\mycompany\projetofinalpizzaria\TipoPizza.class
+com\mycompany\projetofinalpizzaria\VisualizarPedidos.class
 com\mycompany\projetofinalpizzaria\PreencherTabelaCliente.class
 com\mycompany\projetofinalpizzaria\CadastrarSabor.class
 com\mycompany\projetofinalpizzaria\Quadrado.class

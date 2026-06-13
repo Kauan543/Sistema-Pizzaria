@@ -67,6 +67,7 @@ public class RealizarPedido extends javax.swing.JFrame {
         MenuCadastrarSabor1 = new javax.swing.JMenuItem();
         MenuPedido = new javax.swing.JMenu();
         MenuPedidoCliente = new javax.swing.JMenuItem();
+        menuVerPedidos = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -317,6 +318,10 @@ public class RealizarPedido extends javax.swing.JFrame {
         MenuPedidoCliente.addActionListener(this::MenuPedidoClienteActionPerformed);
         MenuPedido.add(MenuPedidoCliente);
 
+        menuVerPedidos.setText("Visualizar Pedidos");
+        menuVerPedidos.addActionListener(this::menuVerPedidosActionPerformed);
+        MenuPedido.add(menuVerPedidos);
+
         jMenuBar1.add(MenuPedido);
 
         setJMenuBar(jMenuBar1);
@@ -369,25 +374,6 @@ public class RealizarPedido extends javax.swing.JFrame {
         DefaultTableModel modelo = (DefaultTableModel) tabelaPedido.getModel();
         modelo.setRowCount(0);
     } 
-    private void MenuClientesCadastradosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuClientesCadastradosActionPerformed
-        CadastrarCliente cc = new CadastrarCliente();
-        cc.setVisible(true);
-    }//GEN-LAST:event_MenuClientesCadastradosActionPerformed
-
-    private void MenuAtualizarPrecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAtualizarPrecoActionPerformed
-        AtualizarPreco atualizar = new AtualizarPreco();
-        atualizar.setVisible(true);
-    }//GEN-LAST:event_MenuAtualizarPrecoActionPerformed
-
-    private void MenuCadastrarSabor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuCadastrarSabor1ActionPerformed
-        CadastrarSabor cs = new CadastrarSabor();
-        cs.setVisible(true);
-    }//GEN-LAST:event_MenuCadastrarSabor1ActionPerformed
-
-    private void MenuPedidoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuPedidoClienteActionPerformed
-
-    }//GEN-LAST:event_MenuPedidoClienteActionPerformed
-
     private void botaoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBuscarActionPerformed
         String telefone = caixaTextoTelefone.getText();
         BancoDados bd = BancoDados.getInstance();
@@ -542,6 +528,30 @@ public class RealizarPedido extends javax.swing.JFrame {
 
     }//GEN-LAST:event_formWindowActivated
 
+    private void MenuClientesCadastradosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuClientesCadastradosActionPerformed
+        CadastrarCliente cc = new CadastrarCliente();
+        cc.setVisible(true);
+    }//GEN-LAST:event_MenuClientesCadastradosActionPerformed
+
+    private void MenuAtualizarPrecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAtualizarPrecoActionPerformed
+        AtualizarPreco atualizar = new AtualizarPreco();
+        atualizar.setVisible(true);
+    }//GEN-LAST:event_MenuAtualizarPrecoActionPerformed
+
+    private void MenuCadastrarSabor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuCadastrarSabor1ActionPerformed
+        CadastrarSabor cs = new CadastrarSabor();
+        cs.setVisible(true);
+    }//GEN-LAST:event_MenuCadastrarSabor1ActionPerformed
+
+    private void MenuPedidoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuPedidoClienteActionPerformed
+
+    }//GEN-LAST:event_MenuPedidoClienteActionPerformed
+
+    private void menuVerPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuVerPedidosActionPerformed
+        VisualizarPedidos vp = new VisualizarPedidos();
+        vp.setVisible(true);
+    }//GEN-LAST:event_menuVerPedidosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -592,6 +602,7 @@ public class RealizarPedido extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel labelInformacoes;
     private javax.swing.JLabel lugarNomeCliente;
+    private javax.swing.JMenuItem menuVerPedidos;
     private javax.swing.JPanel panelPedido;
     private javax.swing.JTable tabelaPedido;
     private javax.swing.JTable tabelasPedidosCliente;
