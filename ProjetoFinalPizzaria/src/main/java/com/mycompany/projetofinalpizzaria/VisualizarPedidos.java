@@ -4,6 +4,8 @@
  */
 package com.mycompany.projetofinalpizzaria;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Kauan
@@ -18,8 +20,30 @@ public class VisualizarPedidos extends javax.swing.JFrame {
     public VisualizarPedidos() {
         initComponents();
         menuVerPedidos.setEnabled(false);
+        atualizarTabela();
+        preencherComboEstado();
+        panelAlterar.setEnabled(false);
+        botaoAtualizar.setEnabled(false);
+        comboEstado.setEnabled(false);
+        labelEditar.setEnabled(false);
     }
-
+    
+    
+     public void atualizarTabela() {
+    //Instancia a classe que prepara os dados
+    PreencherTabelaListaPedidos preenchimento = new PreencherTabelaListaPedidos();
+    
+    //Chama o método gerarModelo e joga na tabela de Clientes
+    tabelaPedidos.setModel(preenchimento.gerarModelo());
+    }
+     
+    public void preencherComboEstado(){
+        BancoDados bd = BancoDados.getInstance();
+        for(int i = 0; i<bd.getListaEstado().size();i++){
+            String estado = bd.getListaEstado().get(i).getNome();
+            comboEstado.addItem(estado);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -34,10 +58,13 @@ public class VisualizarPedidos extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabelaPedidos = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        botao1Excluir = new javax.swing.JButton();
-        jPanel4 = new javax.swing.JPanel();
+        botaoEditar = new javax.swing.JButton();
+        panelAlterar = new javax.swing.JPanel();
+        labelEditar = new javax.swing.JLabel();
+        comboEstado = new javax.swing.JComboBox<>();
+        botaoAtualizar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         MenuClientes = new javax.swing.JMenu();
         MenuClientesCadastrados = new javax.swing.JMenuItem();
@@ -48,7 +75,12 @@ public class VisualizarPedidos extends javax.swing.JFrame {
         MenuPedidoCliente = new javax.swing.JMenuItem();
         menuVerPedidos = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(245, 245, 220));
 
@@ -77,28 +109,25 @@ public class VisualizarPedidos extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel3.setOpaque(false);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaPedidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "N° Pedido", "Quantidade Pizza(s)", "Estado", "Valor"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabelaPedidos);
 
         jLabel2.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Lista de pedidos");
 
-        botao1Excluir.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
-        botao1Excluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/pencil.png"))); // NOI18N
-        botao1Excluir.setText("Mudar Estado");
-        botao1Excluir.addActionListener(this::botao1ExcluirActionPerformed);
+        botaoEditar.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
+        botaoEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/pencil.png"))); // NOI18N
+        botaoEditar.setText("Mudar Estado");
+        botaoEditar.addActionListener(this::botaoEditarActionPerformed);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -106,35 +135,65 @@ public class VisualizarPedidos extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(29, Short.MAX_VALUE)
+                .addGap(29, 29, 29)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 592, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botao1Excluir))
+                    .addComponent(jScrollPane1)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(botaoEditar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 458, Short.MAX_VALUE)))
                 .addGap(19, 19, 19))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(botao1Excluir)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botaoEditar)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
                 .addGap(28, 28, 28))
         );
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Alterar Estado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe Print", 1, 14), new java.awt.Color(0, 0, 0))); // NOI18N
-        jPanel4.setOpaque(false);
+        panelAlterar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Alterar Estado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe Print", 1, 14), new java.awt.Color(0, 0, 0))); // NOI18N
+        panelAlterar.setOpaque(false);
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 457, Short.MAX_VALUE)
+        labelEditar.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
+        labelEditar.setForeground(new java.awt.Color(0, 0, 0));
+        labelEditar.setText("Editar Estado");
+
+        comboEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+
+        botaoAtualizar.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
+        botaoAtualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/diskette.png"))); // NOI18N
+        botaoAtualizar.setText("Atualizar");
+        botaoAtualizar.addActionListener(this::botaoAtualizarActionPerformed);
+
+        javax.swing.GroupLayout panelAlterarLayout = new javax.swing.GroupLayout(panelAlterar);
+        panelAlterar.setLayout(panelAlterarLayout);
+        panelAlterarLayout.setHorizontalGroup(
+            panelAlterarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelAlterarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(panelAlterarLayout.createSequentialGroup()
+                .addGap(145, 145, 145)
+                .addComponent(botaoAtualizar)
+                .addContainerGap(178, Short.MAX_VALUE))
+            .addGroup(panelAlterarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(comboEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 362, Short.MAX_VALUE)
+        panelAlterarLayout.setVerticalGroup(
+            panelAlterarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelAlterarLayout.createSequentialGroup()
+                .addGap(49, 49, 49)
+                .addComponent(labelEditar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(comboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addComponent(botaoAtualizar)
+                .addGap(24, 24, 24))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -143,10 +202,10 @@ public class VisualizarPedidos extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(panelAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(32, 32, 32)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -156,11 +215,12 @@ public class VisualizarPedidos extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(31, 31, 31)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(24, 24, 24))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(118, 118, 118)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 24, Short.MAX_VALUE))
+                        .addGap(162, 162, 162)
+                        .addComponent(panelAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         MenuClientes.setText("Clientes");
@@ -211,6 +271,7 @@ public class VisualizarPedidos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void MenuClientesCadastradosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuClientesCadastradosActionPerformed
         CadastrarCliente cc = new CadastrarCliente();
         cc.setVisible(true);
@@ -227,7 +288,8 @@ public class VisualizarPedidos extends javax.swing.JFrame {
     }//GEN-LAST:event_MenuCadastrarSabor1ActionPerformed
 
     private void MenuPedidoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuPedidoClienteActionPerformed
-
+        RealizarPedido rp = new RealizarPedido();
+        rp.setVisible(true);
     }//GEN-LAST:event_MenuPedidoClienteActionPerformed
 
     private void menuVerPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuVerPedidosActionPerformed
@@ -235,9 +297,80 @@ public class VisualizarPedidos extends javax.swing.JFrame {
         vp.setVisible(true);
     }//GEN-LAST:event_menuVerPedidosActionPerformed
 
-    private void botao1ExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao1ExcluirActionPerformed
+    private void botaoEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarActionPerformed
+        int linhaSelecionada = tabelaPedidos.getSelectedRow();
+        //caso nenhuma linha selecionada
+        if(linhaSelecionada == -1){
+            JOptionPane.showMessageDialog(this,"Nenhuma linha foi selecionada");
+            panelAlterar.setEnabled(false);
+            botaoAtualizar.setEnabled(false);
+            comboEstado.setEnabled(false);
+            labelEditar.setEnabled(false);
+            return;
+        }
+        String estado = tabelaPedidos.getValueAt(linhaSelecionada, 2).toString();
+        comboEstado.setSelectedItem(estado);
+        panelAlterar.setEnabled(true);
+        botaoAtualizar.setEnabled(true);
+        comboEstado.setEnabled(true);
+        labelEditar.setEnabled(true);
+        
+    }//GEN-LAST:event_botaoEditarActionPerformed
 
-    }//GEN-LAST:event_botao1ExcluirActionPerformed
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        atualizarTabela();
+    }//GEN-LAST:event_formWindowActivated
+
+    private void botaoAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAtualizarActionPerformed
+        int linhaSelecionada = tabelaPedidos.getSelectedRow();
+        //caso nenhuma linha selecionada
+        if(linhaSelecionada == -1){
+            JOptionPane.showMessageDialog(this,"Nenhuma linha foi selecionada");
+            panelAlterar.setEnabled(false);
+            botaoAtualizar.setEnabled(false);
+            comboEstado.setEnabled(false);
+            labelEditar.setEnabled(false);
+            return;
+        }
+        int numeroPedido = Integer.parseInt(tabelaPedidos.getValueAt(linhaSelecionada, 0).toString());
+        BancoDados bd = BancoDados.getInstance();
+        Pedido p = null;
+        for(int i = 0; i < bd.getListaPedido().size();i++){
+           p = bd.getListaPedido().get(i);
+           if(p.getIdPedido() == numeroPedido){
+               break;
+           }
+        }
+        if(p == null){
+            JOptionPane.showMessageDialog(this,"Erro ao encontrar cliente", "",JOptionPane.ERROR_MESSAGE);
+            panelAlterar.setEnabled(false);
+            botaoAtualizar.setEnabled(false);
+            comboEstado.setEnabled(false);
+            labelEditar.setEnabled(false);
+        }
+        else{
+            String estado = comboEstado.getSelectedItem().toString();
+            Estado e = null;
+            for(int i = 0; i < bd.getListaEstado().size(); i++){
+                e = bd.getListaEstado().get(i);
+                if(e.getNome().equals(estado)){
+                    p.setEstado(e);
+                    atualizarTabela();
+                    panelAlterar.setEnabled(false);
+                    botaoAtualizar.setEnabled(false);
+                    comboEstado.setEnabled(false);
+                    labelEditar.setEnabled(false);
+                    JOptionPane.showMessageDialog(this,"Estado alterado com sucesso");
+                    return;
+                }
+            }
+            JOptionPane.showMessageDialog(this,"Erro ao encontrar estado", "",JOptionPane.ERROR_MESSAGE);
+            panelAlterar.setEnabled(false);
+            botaoAtualizar.setEnabled(false);
+            comboEstado.setEnabled(false);
+            labelEditar.setEnabled(false);
+        }
+    }//GEN-LAST:event_botaoAtualizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -272,16 +405,19 @@ public class VisualizarPedidos extends javax.swing.JFrame {
     private javax.swing.JMenuItem MenuClientesCadastrados;
     private javax.swing.JMenu MenuPedido;
     private javax.swing.JMenuItem MenuPedidoCliente;
-    private javax.swing.JButton botao1Excluir;
+    private javax.swing.JButton botaoAtualizar;
+    private javax.swing.JButton botaoEditar;
+    private javax.swing.JComboBox<String> comboEstado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel labelEditar;
     private javax.swing.JMenuItem menuVerPedidos;
+    private javax.swing.JPanel panelAlterar;
+    private javax.swing.JTable tabelaPedidos;
     // End of variables declaration//GEN-END:variables
 }

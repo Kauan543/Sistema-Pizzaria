@@ -795,7 +795,8 @@ public class NovaPizza extends javax.swing.JFrame {
     }//GEN-LAST:event_MenuCadastrarSabor1ActionPerformed
 
     private void MenuPedidoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuPedidoClienteActionPerformed
-
+        RealizarPedido rp = new RealizarPedido();
+        rp.setVisible(true);
     }//GEN-LAST:event_MenuPedidoClienteActionPerformed
 
     private void menuVerPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuVerPedidosActionPerformed

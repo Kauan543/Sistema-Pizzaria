@@ -374,6 +374,10 @@ public class RealizarPedido extends javax.swing.JFrame {
         DefaultTableModel modelo = (DefaultTableModel) tabelaPedido.getModel();
         modelo.setRowCount(0);
     } 
+    public void limparTabela2() {
+        DefaultTableModel modelo = (DefaultTableModel) tabelasPedidosCliente.getModel();
+        modelo.setRowCount(0);
+    } 
     private void botaoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBuscarActionPerformed
         String telefone = caixaTextoTelefone.getText();
         BancoDados bd = BancoDados.getInstance();
@@ -399,6 +403,8 @@ public class RealizarPedido extends javax.swing.JFrame {
             botaoAtualizar.setEnabled(false);
             lugarNomeCliente.setText("Cliente: ");
             limparTabela();
+            limparTabela2();
+            labelInformacoes.setText("Resumo Pedido: R$:0.00 | 0 Pizzas");
             return;
         }
         else{
@@ -492,7 +498,11 @@ public class RealizarPedido extends javax.swing.JFrame {
             botaoNovoPedido.setEnabled(false);
             botaoAtualizar.setEnabled(false);
             lugarNomeCliente.setText("Cliente: ");
+            caixaTextoTelefone.setText("");
+            
             limparTabela();
+            limparTabela2();
+            labelInformacoes.setText("Resumo Pedido: R$:0.00 | 0 Pizzas");
         }
         
     }//GEN-LAST:event_botao2PedidoActionPerformed
@@ -544,7 +554,8 @@ public class RealizarPedido extends javax.swing.JFrame {
     }//GEN-LAST:event_MenuCadastrarSabor1ActionPerformed
 
     private void MenuPedidoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuPedidoClienteActionPerformed
-
+        RealizarPedido rp = new RealizarPedido();
+        rp.setVisible(true);
     }//GEN-LAST:event_MenuPedidoClienteActionPerformed
 
     private void menuVerPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuVerPedidosActionPerformed
