@@ -46,17 +46,17 @@ public class NovaPizza extends javax.swing.JFrame {
        
     }
     private double obterPrecoPorCm2(String nomeSabor) {
-    if (nomeSabor == null){
-        return 0.0;
-    }
-    BancoDados bd = BancoDados.getInstance();
-    for (int i = 0; i < bd.getListaSabor().size(); i++) {
-        if (bd.getListaSabor().get(i).getSabor().equals(nomeSabor)) {
-            return bd.getListaSabor().get(i).getTipo().getPrecoPorCentimentroQuadrado(); 
+        if (nomeSabor == null){
+            return 0.0;
         }
+        BancoDados bd = BancoDados.getInstance();
+        for (int i = 0; i < bd.getListaSabor().size(); i++) {
+            if (bd.getListaSabor().get(i).getSabor().equals(nomeSabor)) {
+                return bd.getListaSabor().get(i).getTipo().getPrecoPorCentimentroQuadrado(); 
+            }
+        }
+        return 0;
     }
-    return 0;
-}
     private void calcularPreco() {
     try { 
         double area = 0.0;
