@@ -272,6 +272,14 @@ public class CadastrarSabor extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,"Existem campos em branco por favor preencha todos os campos","",JOptionPane.ERROR_MESSAGE);
             return;
         }
+        //verifica se ja existe aquela sabor
+        for(int j = 0; j< bd.getListaSabor().size();j++){
+            Sabor s = bd.getListaSabor().get(j);
+            if(s.getSabor().equals(nomeSabor)){
+                JOptionPane.showMessageDialog(this,"Sabor ja cadastrado","",JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
         try{
             for(int i = 0; i < bd.getListaTipo().size();i++){
                 TipoPizza tipop = bd.getListaTipo().get(i);

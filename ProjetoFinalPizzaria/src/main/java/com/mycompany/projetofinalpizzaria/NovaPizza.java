@@ -739,6 +739,10 @@ public class NovaPizza extends javax.swing.JFrame {
                 } else if (CheckTriangular.isSelected()) {
                     f = new Triangulo();
                 }
+                else{
+                    JOptionPane.showMessageDialog(this,"Não possivel criar uma pizza sem escolher um formato","",JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
             }
         
             else if(CheckDimensao.isSelected() && !caixaTextoLado.getText().isEmpty()){
@@ -749,6 +753,10 @@ public class NovaPizza extends javax.swing.JFrame {
                     f = new Circulo(dimensao);
                 } else if (CheckTriangular.isSelected()) {
                     f = new Triangulo(dimensao);
+                }
+                else{
+                    JOptionPane.showMessageDialog(this,"Não possivel criar uma pizza sem escolher um formato","",JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
                 area = f.calculaArea();
             }

@@ -22,10 +22,11 @@ public class PreecherTabelaPedidoCliente {
         };        
         BancoDados banco = BancoDados.getInstance();
         for(int i = 0; i<banco.getListaPedido().size();i++){
+            double precoTotal = banco.getListaPedido().get(i).getPrecoTotal();
             if(banco.getListaPedido().get(i).getCliente().getTelefone().equals(cliente.getTelefone())){
                 Object [] linha= {
                 banco.getListaPedido().get(i).getIdPedido(),
-                banco.getListaPedido().get(i).getPrecoTotal(),
+                String.format("R$ %.2f", precoTotal),
                 banco.getListaPedido().get(i).getEstado().getNome()
             };
             modelo.addRow(linha);

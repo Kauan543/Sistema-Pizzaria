@@ -23,11 +23,12 @@ public class PreencherTabelaListaPedidos {
         };        
         BancoDados banco = BancoDados.getInstance();
         for(int i = 0; i<banco.getListaPedido().size();i++){
+            double precoTotal = banco.getListaPedido().get(i).getPrecoTotal();
             Object [] linha= {
                 banco.getListaPedido().get(i).getIdPedido(),
                 banco.getListaPedido().get(i).getPizza().size(),
                 banco.getListaPedido().get(i).getEstado().getNome(),
-                banco.getListaPedido().get(i).getPrecoTotal()
+                String.format("R$ %.2f", precoTotal),
             };
             modelo.addRow(linha);
         }
