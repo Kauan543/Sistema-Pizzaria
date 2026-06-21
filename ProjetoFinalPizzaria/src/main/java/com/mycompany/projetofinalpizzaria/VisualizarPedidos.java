@@ -11,17 +11,16 @@ import javax.swing.JOptionPane;
  * @author Kauan
  */
 public class VisualizarPedidos extends javax.swing.JFrame {
-    
+    //criado pelo Netbeans
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VisualizarPedidos.class.getName());
 
-    /**
-     * Creates new form VisualizarPedidos
-     */
+    //construtor
     public VisualizarPedidos() {
         initComponents();
-        menuVerPedidos.setEnabled(false);
         atualizarTabela();
         preencherComboEstado();
+        //desabilita aqlo que nao eh necessario no inicio
+        menuVerPedidos.setEnabled(false);
         panelAlterar.setEnabled(false);
         botaoAtualizar.setEnabled(false);
         comboEstado.setEnabled(false);
@@ -30,13 +29,12 @@ public class VisualizarPedidos extends javax.swing.JFrame {
     
     
      public void atualizarTabela() {
-    //Instancia a classe que prepara os dados
-    PreencherTabelaListaPedidos preenchimento = new PreencherTabelaListaPedidos();
-    
-    //Chama o método gerarModelo e joga na tabela de Clientes
-    tabelaPedidos.setModel(preenchimento.gerarModelo());
+        //Instancia a classe que cria o modelo
+        PreencherTabelaListaPedidos preenchimento = new PreencherTabelaListaPedidos(); 
+        //Chama o método gerarModelo() e joga na tabela de Pedidos
+        tabelaPedidos.setModel(preenchimento.gerarModelo());
     }
-     
+     //preeche combo com todos os estados cadastrados no bd
     public void preencherComboEstado(){
         BancoDados bd = BancoDados.getInstance();
         for(int i = 0; i<bd.getListaEstado().size();i++){
@@ -316,7 +314,7 @@ public class VisualizarPedidos extends javax.swing.JFrame {
         labelEditar.setEnabled(true);
         
     }//GEN-LAST:event_botaoEditarActionPerformed
-
+    //garante q a tabela atualizae toda vez q a pagina tiver destaque
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         atualizarTabela();
     }//GEN-LAST:event_formWindowActivated
@@ -335,6 +333,7 @@ public class VisualizarPedidos extends javax.swing.JFrame {
         int numeroPedido = Integer.parseInt(tabelaPedidos.getValueAt(linhaSelecionada, 0).toString());
         BancoDados bd = BancoDados.getInstance();
         Pedido p = null;
+        //busca pedido no bd
         for(int i = 0; i < bd.getListaPedido().size();i++){
            p = bd.getListaPedido().get(i);
            if(p.getIdPedido() == numeroPedido){
@@ -351,9 +350,11 @@ public class VisualizarPedidos extends javax.swing.JFrame {
         else{
             String estado = comboEstado.getSelectedItem().toString();
             Estado e = null;
+            //busca o estado selecionado no bd
             for(int i = 0; i < bd.getListaEstado().size(); i++){
                 e = bd.getListaEstado().get(i);
                 if(e.getNome().equals(estado)){
+                    //troca o estado do pedido e desabilita novamente as coisas
                     p.setEstado(e);
                     atualizarTabela();
                     panelAlterar.setEnabled(false);

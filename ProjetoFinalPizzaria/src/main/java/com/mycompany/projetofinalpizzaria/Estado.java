@@ -10,7 +10,7 @@ package com.mycompany.projetofinalpizzaria;
  */
 public class Estado {
     private String nome;
-    
+    //construtor
     public Estado(String nome){
         this.nome = nome;
     }

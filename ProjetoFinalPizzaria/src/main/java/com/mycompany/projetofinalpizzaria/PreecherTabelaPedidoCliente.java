@@ -11,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Kauan
  */
 public class PreecherTabelaPedidoCliente {
+    //gera modelo pra tabela de Pedidos do cliente
      public DefaultTableModel gerarModelo2(Cliente cliente){
         String [] colunas = {"N° Pedido", "Valor", "Estado"};
         DefaultTableModel modelo = new DefaultTableModel(colunas, 0){

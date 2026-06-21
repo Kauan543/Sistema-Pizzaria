@@ -9,5 +9,6 @@ package com.mycompany.projetofinalpizzaria;
  * @author Kauan
  */
 public abstract class Forma {
+    //metodo abstrato para calcular area da forma
     public abstract double calculaArea();
 }

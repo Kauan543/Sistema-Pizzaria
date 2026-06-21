@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class BancoDados {
     // Variável que guarda a unica instancia da classe
     private static BancoDados instanciaUnica;
+    //todas as listas q serão necessarias
     private ArrayList<Cliente> listaCliente;
     private ArrayList<Sabor> listaSabor;
     private ArrayList<TipoPizza> listaTipo;
@@ -41,6 +42,9 @@ public class BancoDados {
         listaTipo = new ArrayList<>();
         listaEstado = new ArrayList<>();
         listaPedido = new ArrayList<>();
+        /*monitoramento de exceção feito aqui, pq a Classe TipoPizza lança exceção
+        quando seu atributo preço vem com mais de dois numeros depois da virgula 
+        */
         try{
             listaTipo.add(new TipoPizza("Simples", 0));
             listaTipo.add(new TipoPizza("Especial", 0));

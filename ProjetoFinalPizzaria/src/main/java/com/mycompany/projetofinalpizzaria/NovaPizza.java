@@ -14,42 +14,45 @@ import javax.swing.table.DefaultTableModel;
  * @author Kauan
  */
 public class NovaPizza extends javax.swing.JFrame {
-    
+    //gerado pelo Netbeans
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(NovaPizza.class.getName());
-
-    /**
-     * Creates new form CadastrarCliente
-     */
+    //variavel pra guardar preço total da pizza
     private double precoTotalCalculado = 0.0;
+    //variavel pra guarda a referencia da tela de pedidos
     private RealizarPedido telaPedido;
+    //construtor com a referencia da tela de realizar pedido, para no futuro atualiza a tabela 
     public NovaPizza(RealizarPedido telaPedido) {
+        //guarda a referencia da tela na variavel 
         this.telaPedido = telaPedido;
         initComponents();
+        //preenche ambos os combos sabor
+        preencherComboSabor();  
+        //desabilita tudo q nao eh necessario inicialmente
         MenuPedidoCliente.setEnabled(false);
-        preencherComboSabor();
         caixaTextoLado.setEnabled(false);
         caixaTextoArea.setEnabled(false);
         comboSabor1.setEnabled(false);
         comboSabor2.setEnabled(false);
+        //Cria ButtonGroups para forma
         ButtonGroup grupoForma = new ButtonGroup();
         grupoForma.add(CheckQuadrada); 
         grupoForma.add(CheckCircular); 
         grupoForma.add(CheckTriangular); 
-
+        //Cria ButtonGroups para formas
         ButtonGroup grupoDefinicao = new ButtonGroup();
         grupoDefinicao.add(CheckDimensao); 
         grupoDefinicao.add(CheckArea); 
-
+        //Cria ButtonGroups para sabores
         ButtonGroup grupoSabores = new ButtonGroup();
         grupoSabores.add(CheckSabor1); 
-        grupoSabores.add(CheckSabor2); 
-       
+        grupoSabores.add(CheckSabor2);   
     }
     private double obterPrecoPorCm2(String nomeSabor) {
         if (nomeSabor == null){
             return 0.0;
         }
         BancoDados bd = BancoDados.getInstance();
+        //busca preço por cm² no bd
         for (int i = 0; i < bd.getListaSabor().size(); i++) {
             if (bd.getListaSabor().get(i).getSabor().equals(nomeSabor)) {
                 return bd.getListaSabor().get(i).getTipo().getPrecoPorCentimentroQuadrado(); 
@@ -57,6 +60,7 @@ public class NovaPizza extends javax.swing.JFrame {
         }
         return 0;
     }
+    
     private void calcularPreco() {
     try { 
         double area = 0.0;
@@ -67,13 +71,16 @@ public class NovaPizza extends javax.swing.JFrame {
             String nomeSabor1 = comboSabor1.getSelectedItem().toString();
             double precoSabor1 = obterPrecoPorCm2(nomeSabor1);
             if (CheckSabor2.isSelected() && comboSabor2.getSelectedItem() != null) {
+                //caso escolha 2 sabores
                 String nomeSabor2 = comboSabor2.getSelectedItem().toString();
                 double precoSabor2 = obterPrecoPorCm2(nomeSabor2);
                 precoPorCmQuadrado = (precoSabor1 + precoSabor2) / 2.0;
             } else {
+                //caso escolha 1 sabor
                 precoPorCmQuadrado = precoSabor1;
             }
         }
+        // caso escolha por area
         if (CheckArea.isSelected() && !caixaTextoArea.getText().isEmpty()) {
             area = Double.parseDouble(caixaTextoArea.getText());
             double lado = 0;
@@ -87,9 +94,11 @@ public class NovaPizza extends javax.swing.JFrame {
                 Triangulo t = new Triangulo();
                 lado = t.calcularLadoTriangulo(area);
             }
+            //para garantir q apareça com no maximo 2 numeros depois da virgula
             lugarMedidaFinal.setText(String.format("Medida = %.2f", lado));
             
         } 
+        //caso escolha por dimensao
         else if (CheckDimensao.isSelected() && !caixaTextoLado.getText().isEmpty()) {
             double dimensao = Double.parseDouble(caixaTextoLado.getText());
             
@@ -103,22 +112,27 @@ public class NovaPizza extends javax.swing.JFrame {
                 f = new Triangulo(dimensao);
                 area = f.calculaArea();
             }
+            //para garantir q apareça com no maximo 2 numeros depois da virgula
             lugarMedidaFinal.setText(String.format("Area = %.2f", area));
         }
-        
+        //calcula valor total
         valorTotal = area * precoPorCmQuadrado;
+        //salva na variavel o valor
         this.precoTotalCalculado = valorTotal;
+        //para garantir q apareça com no maximo 2 numeros depois da virgula
         lugarPreco.setText(String.format("Preço: R$: %.2f", valorTotal));
 
     } catch (NumberFormatException e) {
+        //caso alguma informação falte
         lugarPreco.setText("Preço: R$: 0.00");
     }
     catch(Exception e ){
+        //caso ultrapasse limite das dimensões
         JOptionPane.showMessageDialog(this,"Limite das dimensão não se enquadra","",JOptionPane.ERROR_MESSAGE);
     }
 }
 
-    //para ver se ja existe sabor no combo
+    //para ver se ja existe sabor no combo e nao ficar preenchendo varias vezes
     private boolean itemExiste(javax.swing.JComboBox<String> combo, String item) {
         for (int i = 0; i < combo.getItemCount(); i++) {
             if (combo.getItemAt(i).equals(item)) {
@@ -655,6 +669,7 @@ public class NovaPizza extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void CheckTriangularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckTriangularActionPerformed
+        //mostra max e min de triangulo
         if(!CheckArea.isSelected()){
             lugarMedida.setText("Max:60 | Min:20");
         }
@@ -666,6 +681,7 @@ public class NovaPizza extends javax.swing.JFrame {
         caixaTextoArea.setEnabled(true);
         lugarMedidaFinal.setText("Área ou lado :");
         caixaTextoLado.setText("");
+        //mostra max e min de area
         lugarArea.setText("Max:1600cm² | Min: 100cm²");
         lugarMedida.setText("Max: | Min:");
         calcularPreco();
@@ -674,6 +690,7 @@ public class NovaPizza extends javax.swing.JFrame {
     private void CheckSabor2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckSabor2ActionPerformed
         comboSabor2.setEnabled(true);
         comboSabor1.setEnabled(true);
+        //habilita os dois combos
         calcularPreco();
         lugarMedida.setText("Max: | Min:");
     }//GEN-LAST:event_CheckSabor2ActionPerformed
@@ -683,6 +700,7 @@ public class NovaPizza extends javax.swing.JFrame {
         caixaTextoArea.setEnabled(false);
         lugarMedidaFinal.setText("Área ou lado :");
         caixaTextoArea.setText("");
+        //mostra max e min da forma escolhida
         if (CheckQuadrada.isSelected()) {
             lugarMedida.setText("Max:40 | Min:10");
         } 
@@ -702,12 +720,14 @@ public class NovaPizza extends javax.swing.JFrame {
         calcularPreco();
     }
     private void CheckSabor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckSabor1ActionPerformed
+        //habilita combo 1 e desabilita o 2 
         comboSabor1.setEnabled(true);
         comboSabor2.setEnabled(false);
         calcularPreco();
     }//GEN-LAST:event_CheckSabor1ActionPerformed
 
     private void CheckQuadradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckQuadradaActionPerformed
+        //mostra max e min de quadrado
         if(!CheckArea.isSelected()){
             lugarMedida.setText("Max:40 | Min:10");
         }
@@ -715,6 +735,7 @@ public class NovaPizza extends javax.swing.JFrame {
     }//GEN-LAST:event_CheckQuadradaActionPerformed
 
     private void CheckCircularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckCircularActionPerformed
+        //mostra max e min de circulo
         if(!CheckArea.isSelected()){
             lugarMedida.setText("Max:23 | Min:7");
         }
@@ -729,9 +750,11 @@ public class NovaPizza extends javax.swing.JFrame {
         double area = 0.0;
         Forma f = null;
         try{
+                //caso escolha por area
             if (CheckArea.isSelected() && !caixaTextoArea.getText().isEmpty()) {
                 area = Double.parseDouble(caixaTextoArea.getText());
                 double lado = 0;
+                //instacia a forma de acordo com a escolha
                 if (CheckQuadrada.isSelected()) {
                     f = new Quadrado();
                 } else if (CheckCircular.isSelected()) {
@@ -740,13 +763,15 @@ public class NovaPizza extends javax.swing.JFrame {
                     f = new Triangulo();
                 }
                 else{
+                    //para evitar exceção
                     JOptionPane.showMessageDialog(this,"Não possivel criar uma pizza sem escolher um formato","",JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }
-        
+                //caso escolha por medida
             else if(CheckDimensao.isSelected() && !caixaTextoLado.getText().isEmpty()){
                 double dimensao = Double.parseDouble(caixaTextoLado.getText());
+                //instacia a forma de acordo com a escolha
                 if (CheckQuadrada.isSelected()) {
                     f = new Quadrado(dimensao);
                 } else if (CheckCircular.isSelected()) {
@@ -755,6 +780,7 @@ public class NovaPizza extends javax.swing.JFrame {
                     f = new Triangulo(dimensao);
                 }
                 else{
+                    //para evitar exceção
                     JOptionPane.showMessageDialog(this,"Não possivel criar uma pizza sem escolher um formato","",JOptionPane.ERROR_MESSAGE);
                     return;
                 }
@@ -765,6 +791,7 @@ public class NovaPizza extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Erro ao instaciar forma");
         }
         ArrayList<Sabor> sabores = new ArrayList<>();
+        //para adicionar o sabor(es) no array list
         if (comboSabor1.getSelectedItem() != null) {
             String nome1 = comboSabor1.getSelectedItem().toString();
             Sabor sabor1= new Sabor(nome1);
@@ -775,11 +802,13 @@ public class NovaPizza extends javax.swing.JFrame {
             Sabor sabor2= new Sabor(nome2);
             sabores.add(sabor2);
         }
-        
+        //cria pizza
         Pizza pizza = new Pizza(area,f,sabores);
         if (this.telaPedido != null) {
+            //pega referencia da tela e usa o metodo atualizar tabela passando as informações da pizza
             this.telaPedido.atualizarTabela(pizza, precoTotalCalculado, area);
         }
+        //fecha tela
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -24,7 +24,7 @@ public class Pedido {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-
+    //construtor
     public Pedido(int idPedido, double precoTotal, ArrayList<Pizza> pizza, Estado estado, Cliente cliente) {
         this.idPedido = idPedido;
         this.precoTotal = precoTotal;

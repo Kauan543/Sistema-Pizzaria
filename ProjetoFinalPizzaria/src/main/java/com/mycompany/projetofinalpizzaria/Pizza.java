@@ -15,7 +15,7 @@ public class Pizza {
     private double area;
     private Forma forma;
     private ArrayList<Sabor> sabor ;
-
+    //construtor
     public Pizza(double area, Forma forma, ArrayList<Sabor> sabor) {
         this.area = area;
         this.forma = forma;

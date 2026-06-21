@@ -10,7 +10,7 @@ package com.mycompany.projetofinalpizzaria;
  */
 public class Quadrado extends Forma {
     private double lado;
-    
+    //para nao da erro nos testes antigos
     public Quadrado(){
         
     }
@@ -20,6 +20,7 @@ public class Quadrado extends Forma {
 
     public void setLado(double lado)throws Exception {
         if(lado<10 || lado>40){
+            //lança exceção quando ultrapassar o limite da medida
             throw new Exception("lado do quadrado deve ser no minimo 10 e no maximo 40");
         }
         this.lado = lado;
@@ -27,6 +28,7 @@ public class Quadrado extends Forma {
 
     public Quadrado(double lado) throws Exception{
         if(lado<10 || lado>40){
+            //lança exceção quando ultrapassar o limite da medida
             throw new Exception("lado do quadrado deve ser no minimo 10 e no maximo 40");
         }
         this.lado = lado;
@@ -37,6 +39,7 @@ public class Quadrado extends Forma {
     }
     public double calcularLadoQuadrado(double area) {
         if (area < 100 || area>1600){
+            //lança exceção quando ultrapassar o limite da area
             throw new IllegalArgumentException("A área é no minimo 100 e no maximo 1600");
         }
         double resultado = Math.sqrt(area);

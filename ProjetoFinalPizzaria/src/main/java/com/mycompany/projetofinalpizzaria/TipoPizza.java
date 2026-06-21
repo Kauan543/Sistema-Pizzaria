@@ -15,6 +15,7 @@ class TipoPizza {
     public TipoPizza(String categoria, double precoPorCentimentroQuadrado) throws Exception{
         String precoTeste = String.valueOf(precoPorCentimentroQuadrado);
         if(!precoTeste.matches("\\d+(\\.\\d{1,2})?")){
+            //lança exceção caso tenha mais de dois numeros depois da virgula
             throw new Exception("So permite ate dois numero de pois da virgula");
         }
         this.categoria = categoria;
@@ -37,6 +38,7 @@ class TipoPizza {
     public void setPrecoPorCentimentroQuadrado(double precoPorCentimentroQuadrado)throws Exception {
         String precoTeste = String.valueOf(precoPorCentimentroQuadrado);
         if(!precoTeste.matches("\\d+(\\.\\d{1,2})?")){
+            //lança exceção caso tenha mais de dois numeros depois da virgula
             throw new Exception("So permite ate dois numero de pois da virgula");
         }
         this.precoPorCentimentroQuadrado = precoPorCentimentroQuadrado;

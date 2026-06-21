@@ -11,12 +11,14 @@ import javax.swing.JOptionPane;
  * @author Kauan
  */
 public class EditarCliente extends javax.swing.JFrame {
-    
+    //gerado pelo netbeans
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EditarCliente.class.getName());
+    //variavel para salvar cliente que vem da pagina cadastrar cliente
     private Cliente clienteEmEdicao;
     /**
      * Creates new form EditarCliente
      */
+    //construtor padrao criado pelo Netbeans
     public EditarCliente() {
         initComponents();
         MenuClientesCadastrados.setEnabled(false);
@@ -28,6 +30,7 @@ public class EditarCliente extends javax.swing.JFrame {
         MenuClientesCadastrados.setEnabled(false);
         MenuClientesCadastrados.setEnabled(false);
         this.clienteEmEdicao = cliente;
+        //preenche os campos ja com os dados dos clientes
         caixaTextoNome.setText(cliente.getNome());
         caixaTextoSobrenome.setText(cliente.getSobrenome());
         caixaTextoTelefone.setText(cliente.getTelefone());
@@ -277,13 +280,13 @@ public class EditarCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void caixaTextoSobrenomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caixaTextoSobrenomeActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_caixaTextoSobrenomeActionPerformed
 
     private void caixaTextoTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caixaTextoTelefoneActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_caixaTextoTelefoneActionPerformed
 
+    }//GEN-LAST:event_caixaTextoTelefoneActionPerformed
+    //limpa todos os campos
     private void botaoLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLimparActionPerformed
         caixaTextoNome.setText("");
         caixaTextoSobrenome.setText("");
@@ -294,20 +297,26 @@ public class EditarCliente extends javax.swing.JFrame {
         String nome = caixaTextoNome.getText();
         String sobrenome = caixaTextoSobrenome.getText();
         String telefone = caixaTextoTelefone.getText();
+        //Se tiver campos em branco
         if(nome.isEmpty()|| sobrenome.isEmpty()|| telefone.isEmpty()){
             JOptionPane.showMessageDialog(this,"Existem campos em branco por favor preencha todos os campos","",JOptionPane.ERROR_MESSAGE);
             return;
         }
         try{
+            // valida os dados para corrigir bug encontrado
+            Cliente clienteTeste = new Cliente(nome, sobrenome, telefone);
             clienteEmEdicao.setNome(nome);
             clienteEmEdicao.setSobrenome(sobrenome);
             clienteEmEdicao.setTelefone(telefone);
             JOptionPane.showMessageDialog(this,"Edição feita com sucesso!");
+            this.dispose();
             
         }
+        //caso telefone nao siga padrao
         catch(IllegalArgumentException e){
             JOptionPane.showMessageDialog(this,"Telefone invalido","",JOptionPane.ERROR_MESSAGE);
         }
+        //caso nome e sobrenome tenha algo alem de letras
         catch(Exception e){
             JOptionPane.showMessageDialog(this,"Campo nome e sobrenome so permite letras","",JOptionPane.ERROR_MESSAGE);
         }

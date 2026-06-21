@@ -17,12 +17,11 @@ public class RealizarPedido extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RealizarPedido.class.getName());
     // Variável para controlar qual pedido está sendo editado. -1 para um novo Pedido
     private int idPedidoEmEdicao = -1;
-
-    /**
-     * Creates new form RealizarPedido
-     */
+    
+    //Construtor
     public RealizarPedido() {
         initComponents();
+        //desabilita inicialmente as partes de itens do pedido
         MenuPedidoCliente.setEnabled(false);
         AreaPedido.setEnabled(false);
         botao1Pedido.setEnabled(false);
@@ -341,6 +340,7 @@ public class RealizarPedido extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    //busca no bd o valor por CM²
     private double obterPrecoPorCm2(String nomeSabor) {
         if (nomeSabor == null){
             return 0;
@@ -353,9 +353,11 @@ public class RealizarPedido extends javax.swing.JFrame {
         }
         return 0;
     }
+    // atualiza os itens da tabela do pedido METODO CHAMADO EM NOVA PIZZA
     public void atualizarTabela(Pizza pizza, double valor, double area){ 
         DefaultTableModel modelo = (DefaultTableModel)tabelaPedido.getModel();
         StringBuilder sb = new StringBuilder();
+        //salva os sabores na StringBuilder
         for(int i = 0; i< pizza.getSabor().size();i++){
             sb.append(pizza.getSabor().get(i).getSabor()).append(";");
         }
@@ -365,6 +367,7 @@ public class RealizarPedido extends javax.swing.JFrame {
             String.format("R$ %.2f", valor),
             String.format("%.2f cm²", area),
         };
+        //adiciona pizza na tabela
         modelo.addRow(linha);
         atualizaValorTotal();
     }
@@ -375,6 +378,7 @@ public class RealizarPedido extends javax.swing.JFrame {
         else{
             int quantidadePizzas = tabelaPedido.getRowCount();
             double somatorio = 0;
+            //soma o valor de todas as pizzas da tabela e mostra na tela
             for(int i = 0; i< quantidadePizzas; i++){
                 String valor = (String)tabelaPedido.getValueAt(i, 2);
                 valor = valor.replace("R$ ", "").replace(",", ".");
@@ -383,19 +387,23 @@ public class RealizarPedido extends javax.swing.JFrame {
             labelInformacoes.setText(String.format("Resumo Pedido: R$ %.2f | %d Pizzas", somatorio, quantidadePizzas));
         }
     }
+    //limpa tabela Pedido
     public void limparTabela() {
         DefaultTableModel modelo = (DefaultTableModel) tabelaPedido.getModel();
         modelo.setRowCount(0);
     } 
+    //limpa tabela Pedidos do cliente
     public void limparTabela2() {
         DefaultTableModel modelo = (DefaultTableModel) tabelasPedidosCliente.getModel();
         modelo.setRowCount(0);
     } 
+    //busca cliente
     private void botaoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBuscarActionPerformed
         String telefone = caixaTextoTelefone.getText();
         BancoDados bd = BancoDados.getInstance();
         boolean encontrado = false;
         Cliente cliente= null;
+        //procura cliente no bd
         for(int i = 0; i<bd.getListaCliente().size();i++){
             if(telefone.equals(bd.getListaCliente().get(i).getTelefone())){
                 cliente = bd.getListaCliente().get(i); 
@@ -404,6 +412,7 @@ public class RealizarPedido extends javax.swing.JFrame {
                 break;
             }
         }
+        //caso nao encontre
         if(encontrado == false){
             JOptionPane.showMessageDialog(this,"Cliente não encontrado!");
             MenuPedidoCliente.setEnabled(false);
@@ -424,18 +433,21 @@ public class RealizarPedido extends javax.swing.JFrame {
             //listar todos os pedidos do cliente
             PreecherTabelaPedidoCliente  preenchimento = new PreecherTabelaPedidoCliente();
             tabelasPedidosCliente.setModel(preenchimento.gerarModelo2(cliente));
+            //libera esses dois botoes
             botaoAtualizar.setEnabled(true);
             botaoNovoPedido.setEnabled(true);
         }
     }//GEN-LAST:event_botaoBuscarActionPerformed
-    
+    //atualizar pedido
     private void botaoAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAtualizarActionPerformed
         int linhaSelecionada = tabelasPedidosCliente.getSelectedRow();
+        //caso nenhum pedido selecionado
         if (linhaSelecionada == -1) {
             JOptionPane.showMessageDialog(this, "Selecione um pedido na tabela do cliente para atualizar.", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
         String estadoPedido = (String) tabelasPedidosCliente.getValueAt(linhaSelecionada, 2);
+        //caso pedido esteja entregue
         if (!estadoPedido.equals("Aberto") && !estadoPedido.equals("A caminho")) {
             JOptionPane.showMessageDialog(this, "Pedidos encerrados nao podem ser alterados.", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
@@ -453,7 +465,7 @@ public class RealizarPedido extends javax.swing.JFrame {
 
         BancoDados bd = BancoDados.getInstance();
         Pedido pedidoSelecionado = null;
-
+        //procura o pedido na lista de pedidos do bd
         for (int i = 0; i<bd.getListaPedido().size();i++) {
             Pedido p = bd.getListaPedido().get(i);
             if (p.getIdPedido()== idPedido) { 
@@ -461,12 +473,14 @@ public class RealizarPedido extends javax.swing.JFrame {
                 break;
             }
         }
-
+        //
         if (pedidoSelecionado != null) {
+            //preencher a tabela com os itens do pedido
             for (int j = 0; j<pedidoSelecionado.getPizza().size();j++){ 
                 Pizza p = pedidoSelecionado.getPizza().get(j);
                 double area = p.getArea();
                 double precoPorCm2 = 0;
+                //caso pizza tenha 1 sabor
                 if(p.getSabor().size()> 1){
                     String nome1 = p.getSabor().get(0).getSabor();
                     String nome2 = p.getSabor().get(1).getSabor();
@@ -474,6 +488,7 @@ public class RealizarPedido extends javax.swing.JFrame {
                     double preco2 = obterPrecoPorCm2(nome2);
                     precoPorCm2 = (preco1 + preco2)/2;
                 }
+                //caso pizza tem 2 sabores
                 else{
                     String nome1 = p.getSabor().get(0).getSabor();
                     precoPorCm2 = obterPrecoPorCm2(nome1);
@@ -484,8 +499,9 @@ public class RealizarPedido extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_botaoAtualizarActionPerformed
-
+    //salvar pedido
     private void botao2PedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao2PedidoActionPerformed
+        //caso tente criar pedido sem nenhuma pizza
         if(tabelaPedido.getRowCount() == 0){
             JOptionPane.showMessageDialog(this,"O pedido nao pode ser criado sem nenhum item", "",JOptionPane.ERROR_MESSAGE);
             return;
@@ -495,6 +511,7 @@ public class RealizarPedido extends javax.swing.JFrame {
         String telefone = caixaTextoTelefone.getText();
         boolean encontrado = false;
         Cliente cliente= null;
+        //procura cliente no bd
         for(int i = 0; i<bd.getListaCliente().size();i++){
             if(telefone.equals(bd.getListaCliente().get(i).getTelefone())){
                 cliente = bd.getListaCliente().get(i); 
@@ -502,6 +519,7 @@ public class RealizarPedido extends javax.swing.JFrame {
                 break;
             }
         }
+        //caso nao encontre cliente no bd
         if(encontrado == false){
             JOptionPane.showMessageDialog(this,"Erro ao encontrar cliente para atribuir em pedido", "",JOptionPane.ERROR_MESSAGE);
             return;
@@ -509,7 +527,8 @@ public class RealizarPedido extends javax.swing.JFrame {
         int quantidadePizzas = tabelaPedido.getRowCount();
         double valorTotal = 0;
         ArrayList<Pizza> pizzas = new ArrayList<>();
-        for(int i = 0; i< quantidadePizzas; i++){ 
+        for(int i = 0; i< quantidadePizzas; i++){
+            //lista de sabores da pizza
             ArrayList<Sabor> sabores = new ArrayList<>();
             String valor = (String)tabelaPedido.getValueAt(i, 2);
             valor = valor.replace("R$ ", "").replace(",", ".");
@@ -537,6 +556,7 @@ public class RealizarPedido extends javax.swing.JFrame {
             else if(nomeForma.equals("Quadrado")){
                 f = new Quadrado();
             }
+            //caso erro no formato da pizza
             else{
                 JOptionPane.showMessageDialog(this,"Erro ao encotrar formato pizza", "",JOptionPane.ERROR_MESSAGE);
                 return;
@@ -545,6 +565,7 @@ public class RealizarPedido extends javax.swing.JFrame {
             valorArea = valorArea.replace(" cm²", "").replace(",", ".");
             double areaConvertida = Double.parseDouble(valorArea); 
             Pizza p = new Pizza(areaConvertida, f ,sabores);
+            //adiciona pizza na lista
             pizzas.add(p);
         }
      //Verifica se é uma atualização ou novo
@@ -561,7 +582,7 @@ public class RealizarPedido extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Pedido atualizado com sucesso!");
             
         } else {
-            // Caso seja pedido, cria um novo ID e adiciona na lista
+            // Caso seja novo pedido, cria um novo ID e adiciona na lista
             int idPedido = bd.getListaPedido().size() + 1;
             Pedido pedido = new Pedido(idPedido, valorTotal, pizzas, estado, cliente);
             
@@ -574,7 +595,7 @@ public class RealizarPedido extends javax.swing.JFrame {
             }
         }
         
-        // zera a variável de controle
+        //restaura a variável de controle
         this.idPedidoEmEdicao = -1;
         
         MenuPedidoCliente.setEnabled(false);
@@ -597,7 +618,7 @@ public class RealizarPedido extends javax.swing.JFrame {
        NovaPizza np = new NovaPizza(this);
        np.setVisible(true);
     }//GEN-LAST:event_botao1PedidoActionPerformed
-
+    //novo pedido
     private void botaoNovoPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovoPedidoActionPerformed
         // Garantir q sera novo pedido
         idPedidoEmEdicao = -1;

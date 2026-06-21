@@ -12,12 +12,14 @@ public class Cliente {
     private String nome;
     private String sobrenome;
     private String telefone;
-
+    //Construtor
     public Cliente(String nome, String sobrenome, String telefone) throws Exception{
         if(!telefone.matches("\\d{10,11}")){
+            //lança exceção caso numero telefone n siga padrao
             throw new IllegalArgumentException("Telefone deve conter apenas numero e ter no minimo 10 e no maximo 11 caracteres");
         }
         else if(!nome.matches("[a-zA-Z]+")|| !sobrenome.matches("[a-zA-Z]+")){
+            //lança exceção caso nome e sobrenome tiver algo q nao seja letras
             throw new Exception("Nome e Sobrenome so permite letras");
         }
 
@@ -35,6 +37,7 @@ public class Cliente {
             this.nome = nome;
         }
         else{
+            //lança exceção caso nome e sobrenome tiver algo q nao seja letras
             throw new Exception("Nome e Sobrenome so permite letras");
         }
     }
@@ -48,6 +51,7 @@ public class Cliente {
             this.sobrenome = sobrenome;
         }
         else{
+            //lança exceção caso nome e sobrenome tiver algo q nao seja letras
             throw new Exception("Nome e Sobrenome so permite letras");
         }
     }
@@ -61,6 +65,7 @@ public class Cliente {
             this.telefone = telefone;
         }
         else{
+            //lança exceção caso numero telefone n siga padrao
             throw new IllegalArgumentException("Telefone deve conter apenas numero e ter no minimo 10 e no maximo 11 caracteres");
         }
         

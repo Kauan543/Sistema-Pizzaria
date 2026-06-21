@@ -12,24 +12,20 @@ import javax.swing.table.DefaultTableModel;
  * @author Kauan
  */
 public class CadastrarCliente extends javax.swing.JFrame {
-    
+    //gerado pelo Netbeans
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CadastrarCliente.class.getName());
-
-    /**
-     * Creates new form CadastrarCliente
-     */
+    //construtor
     public CadastrarCliente() {
         initComponents();
         atualizarTabela();
         MenuClientesCadastrados.setEnabled(false);
     }
-
+    //para atualizar tabela de clientes
     public void atualizarTabela() {
-    //Instancia a classe que prepara os dados
-    PreencherTabelaCliente preenchimento = new PreencherTabelaCliente();
-    
-    //Chama o método gerarModelo e joga na tabela de Clientes
-    tabelaClientes.setModel(preenchimento.gerarModelo());
+        //Instancia a classe que criar o modelo da tabela
+        PreencherTabelaCliente preenchimento = new PreencherTabelaCliente();
+        //utiliza o metodo gerarModelo() e coloca o modelo na tabela de clientes
+        tabelaClientes.setModel(preenchimento.gerarModelo());
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -326,7 +322,7 @@ public class CadastrarCliente extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    //limpa as caixas de texto
     private void botaoLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLimparActionPerformed
         caixaTextoNome.setText("");
         caixaTextoSobrenome.setText("");
@@ -334,11 +330,11 @@ public class CadastrarCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoLimparActionPerformed
 
     private void caixaTextoSobrenomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caixaTextoSobrenomeActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_caixaTextoSobrenomeActionPerformed
 
     private void caixaTextoTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caixaTextoTelefoneActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_caixaTextoTelefoneActionPerformed
 
     private void botaoAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarActionPerformed
@@ -346,12 +342,14 @@ public class CadastrarCliente extends javax.swing.JFrame {
         String sobrenome = caixaTextoSobrenome.getText();
         String telefone = caixaTextoTelefone.getText();
         BancoDados bd = BancoDados.getInstance();
+        //verifica se ja existe cliente
         for(int i = 0; i<bd.getListaCliente().size();i++){
             if(telefone.equals(bd.getListaCliente().get(i).getTelefone())){
                 JOptionPane.showMessageDialog(this,"Já Existe cliente cadastrado com este telefone","",JOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
+        //verifica se alguma caixa de texto esta em branco
         if(nome.isEmpty()|| sobrenome.isEmpty()|| telefone.isEmpty()){
             JOptionPane.showMessageDialog(this,"Existem campos em branco por favor preencha todos os campos","",JOptionPane.ERROR_MESSAGE);
             return;
@@ -363,14 +361,16 @@ public class CadastrarCliente extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this,"Cadastro Realizado com sucesso");
             }
         }
+        // caso telefone digitado nao siga o padrao
         catch(IllegalArgumentException e){
             JOptionPane.showMessageDialog(this,"Telefone invalido","",JOptionPane.ERROR_MESSAGE);
         }
+        //caso digite algo que nao sejam letras nos campos nome e sobrenome
         catch(Exception e){
             JOptionPane.showMessageDialog(this,"Campo nome e sobrenome so permite letras","",JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_botaoAdicionarActionPerformed
-
+    
     private void botaoEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarActionPerformed
         int linhaSelecionada = tabelaClientes.getSelectedRow();
         //caso nenhuma linha selecionada
@@ -381,28 +381,31 @@ public class CadastrarCliente extends javax.swing.JFrame {
         String telefone = tabelaClientes.getValueAt(linhaSelecionada, 2).toString();
         BancoDados bd = BancoDados.getInstance();
         Cliente cliente = null;
+        //busca aquele cliente na tabela de clientes do bd
         for(int i = 0; i<bd.getListaCliente().size();i++){
             if(telefone.equals(bd.getListaCliente().get(i).getTelefone())){
                 cliente = bd.getListaCliente().get(i);
             }
         }
+        //caso nao encontre cliente no bd
         if(cliente == null){
             JOptionPane.showMessageDialog(this, "Cliente não encontrado no banco de dados", "", JOptionPane.ERROR_MESSAGE);
         }
         else{
+            //abre a tela de editar cliente e passa como parametro pro construtor o cliente
             EditarCliente editar = new EditarCliente(cliente);
             editar.setVisible(true);
         }
     }//GEN-LAST:event_botaoEditarActionPerformed
 
     private void caixaTextoPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caixaTextoPesquisaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_caixaTextoPesquisaActionPerformed
 
+    }//GEN-LAST:event_caixaTextoPesquisaActionPerformed
+    //para garantir q toda vez q a tela ganhe destaque atualize a tabela
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         atualizarTabela();
     }//GEN-LAST:event_formWindowActivated
-
+    //excluir cliente
     private void botaoDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDeleteActionPerformed
         int linhaSelecionada = tabelaClientes.getSelectedRow();
         //caso nenhuma linha selecionada
@@ -425,7 +428,7 @@ public class CadastrarCliente extends javax.swing.JFrame {
         }
         JOptionPane.showMessageDialog(this,"Cliente não encontrado no bd");
     }//GEN-LAST:event_botaoDeleteActionPerformed
-
+    //pesquisar
     private void botaoPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPesquisarActionPerformed
         String resultadoPesquisa = caixaTextoPesquisa.getText();
         boolean encontrado = true;
@@ -437,11 +440,12 @@ public class CadastrarCliente extends javax.swing.JFrame {
             Cliente cliente = bd.getListaCliente().get(i);
             if(resultadoPesquisa.equals(cliente.getTelefone())){
                 encontrado = false;
+                //cria o modelo com os dados do cliente
                 Object [] linha = {cliente.getNome(), cliente.getSobrenome(), cliente.getTelefone()};
                 modelo.addRow(linha);
             }
         }
-        //caso encontre por telefone, retorna resultado e encerra busca
+        //caso encontre por telefone, retorna resultado e encerra busca A LOGICA ESTA INVETIDA, FIQUEI COM PREGUIÇA DE ARRUMAR
         if(encontrado == false){
             tabelaClientes.setModel(modelo);
             return;
@@ -456,7 +460,7 @@ public class CadastrarCliente extends javax.swing.JFrame {
                 modelo.addRow(linha);
             }
         }
-        //caso nao encontre nem por sobrenome e nem por telefone
+        //caso nao encontre nem por sobrenome e nem por telefone A LOGICA ESTA INVETIDA, FIQUEI COM PREGUIÇA DE ARRUMAR
         if(encontrado == true){
             JOptionPane.showMessageDialog(this,"Cliente não cadastrado", "",JOptionPane.ERROR_MESSAGE);
             return;

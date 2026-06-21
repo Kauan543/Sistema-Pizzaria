@@ -11,17 +11,15 @@ import javax.swing.JOptionPane;
  * @author Kauan
  */
 public class CadastrarSabor extends javax.swing.JFrame {
-    
+    //gerado pelo netbeans
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CadastrarSabor.class.getName());
-    private Cliente clienteEmEdicao;
-    /**
-     * Creates new form EditarCliente
-     */
+    //construtor
     public CadastrarSabor() {
         initComponents();
         MenuCadastrarSabor1.setEnabled(false);
         preencherComboTipo();
     }
+    //busca no bd os tipos e preenche o combo
     public void preencherComboTipo(){
         BancoDados bd = BancoDados.getInstance();
         for(int i = 0; i < bd.getListaTipo().size();i++){
@@ -258,16 +256,17 @@ public class CadastrarSabor extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    //Limpa campo nome
     private void botaoLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLimparActionPerformed
         caixaTextoNome.setText("");
 
     }//GEN-LAST:event_botaoLimparActionPerformed
-
+    
     private void botaoAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarActionPerformed
         String nomeSabor = caixaTextoNome.getText();
         String tipo = (String) comboTipoPizza.getSelectedItem();
         BancoDados bd = BancoDados.getInstance();
+        //caso campo nome em branco
         if(nomeSabor.isEmpty()|| tipo.isEmpty()){
             JOptionPane.showMessageDialog(this,"Existem campos em branco por favor preencha todos os campos","",JOptionPane.ERROR_MESSAGE);
             return;
@@ -291,6 +290,7 @@ public class CadastrarSabor extends javax.swing.JFrame {
                 }
             }
         }
+        //para garantir que so tenham letras no nome do sabor
         catch(Exception e){
             JOptionPane.showMessageDialog(this,"Somentes letras podem ser utilizadas para nome do sabor","",JOptionPane.ERROR_MESSAGE);
             return;
